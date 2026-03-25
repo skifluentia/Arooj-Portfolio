@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AI Banking Roundtable Brief | Arooj</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,700;0,9..144,900;1,9..144,400&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{--blue:#2563EB;--blue-dark:#0A1628;--blue-pale:#EFF6FF;--blue-soft:#DBEAFE;--amber:#F59E0B;--text:#0F172A;--text-mid:#334155;--text-muted:#64748B;--border:#E2E8F0;--white:#FFFFFF;--off-white:#F8FAFF;--serif:'Fraunces',serif;--sans:'Plus Jakarta Sans',sans-serif;}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+body{font-family:var(--sans);background:var(--white);color:var(--text);line-height:1.6;}
+a{text-decoration:none;color:inherit;}
+.top-bar{background:var(--blue-dark);padding:14px 5%;display:flex;align-items:center;justify-content:space-between;}
+.back-btn{display:inline-flex;align-items:center;gap:8px;font-size:13px;font-weight:600;color:rgba(255,255,255,0.7);transition:color 0.2s;}
+.back-btn:hover{color:white;}
+.back-btn::before{content:'←';}
+.top-bar-tag{font-size:11px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:#93C5FD;}
+.hero{background:linear-gradient(160deg,var(--blue-dark),#0F2952);padding:60px 5% 50px;}
+.hero-inner{max-width:900px;margin:0 auto;text-align:center;}
+.hero-badge{display:inline-flex;align-items:center;gap:8px;background:rgba(245,158,11,0.15);border:1px solid rgba(245,158,11,0.3);padding:6px 16px;border-radius:50px;font-size:11px;font-weight:700;color:#FCD34D;letter-spacing:1.5px;text-transform:uppercase;margin-bottom:16px;}
+.hero-title{font-family:var(--serif);font-size:clamp(26px,4vw,46px);font-weight:900;color:white;line-height:1.1;margin-bottom:16px;}
+.hero-meta{font-size:13px;color:rgba(255,255,255,0.45);display:flex;align-items:center;justify-content:center;gap:16px;flex-wrap:wrap;}
+.hero-desc{font-size:15px;color:rgba(255,255,255,0.6);max-width:640px;margin:16px auto 0;line-height:1.8;}
+
+.body{max-width:900px;margin:0 auto;padding:52px 5%;}
+h2{font-family:var(--serif);font-size:24px;font-weight:700;color:var(--text);margin:40px 0 12px;}
+h3{font-size:16px;font-weight:700;color:var(--blue);margin:22px 0 8px;}
+p{font-size:14px;color:var(--text-mid);line-height:1.9;margin-bottom:12px;}
+strong{color:var(--text);font-weight:600;}
+
+.section-card{background:var(--off-white);border:1px solid var(--border);border-radius:14px;padding:28px;margin:24px 0;}
+.section-card h3{font-family:var(--serif);font-size:18px;font-weight:700;color:var(--text);margin-bottom:6px;}
+.sc-tag{display:inline-block;font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:1px;padding:3px 10px;border-radius:4px;background:var(--blue-pale);color:var(--blue);margin-bottom:10px;}
+
+.question-block{border-left:3px solid var(--blue);padding:16px 20px;background:var(--blue-pale);border-radius:0 10px 10px 0;margin:16px 0;}
+.question-block p{font-weight:600;color:var(--text);margin-bottom:6px;font-size:14px;}
+.question-block .follow{font-size:13px;color:var(--text-muted);margin:0;}
+
+.opening-quote{background:linear-gradient(135deg,var(--blue-dark),#0F2952);border-radius:14px;padding:28px;margin:24px 0;}
+.oq-text{font-family:var(--serif);font-size:18px;color:white;font-style:italic;line-height:1.7;margin-bottom:10px;}
+.oq-source{font-size:12px;color:rgba(255,255,255,0.4);}
+
+.stats-strip{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin:24px 0;}
+.ss-box{background:var(--blue-dark);border-radius:10px;padding:16px;text-align:center;}
+.ss-n{font-family:var(--serif);font-size:22px;font-weight:700;color:#93C5FD;}
+.ss-l{font-size:10px;color:rgba(255,255,255,0.4);margin-top:3px;}
+
+.work-footer{background:var(--blue-dark);padding:32px 5%;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:14px;}
+.wf-text{font-size:14px;color:rgba(255,255,255,0.5);}
+.wf-text strong{color:white;}
+.wf-back{display:inline-flex;align-items:center;gap:8px;background:var(--blue);color:white;padding:10px 22px;border-radius:8px;font-size:13px;font-weight:600;transition:all 0.2s;}
+.wf-back:hover{background:#3B82F6;}
+@media(max-width:600px){.stats-strip{grid-template-columns:1fr;}}
+</style>
+</head>
+<body>
+
+<div class="top-bar">
+  <a href="../index.html" class="back-btn">Back to Portfolio</a>
+  <span class="top-bar-tag">Executive Content · Roundtable</span>
+</div>
+
+<div class="hero">
+  <div class="hero-inner">
+    <div class="hero-badge">🗽 AI Association · New York</div>
+    <h1 class="hero-title">AI Innovation in Banking:<br>The Future of Intelligent Finance</h1>
+    <div class="hero-meta">
+      <span>🏛️ Executive Roundtable Discussion Brief</span>
+      <span>✍️ Written by Arooj</span>
+      <span>👥 Audience: Bank CEOs · Regulators · Academics</span>
+    </div>
+    <p class="hero-desc">Complete discussion framework produced for the AI Association in Banking & Financial Services roundtable. Covers AI trends, credit scoring, fraud prevention, trading, personalization, and quantum computing.</p>
+  </div>
+</div>
+
+<div class="body">
+
+  <div class="opening-quote">
+    <p class="oq-text">"Banks that master AI will dominate. The rest will become utilities."</p>
+    <p class="oq-source">— Jane Fraser, CEO, Citigroup · Referenced in roundtable opening</p>
+  </div>
+
+  <div class="stats-strip">
+    <div class="ss-box"><div class="ss-n">$1.2T</div><div class="ss-l">Value up for grabs by 2035 (Accenture)</div></div>
+    <div class="ss-box"><div class="ss-n">84%</div><div class="ss-l">Banks call AI critical to survival (McKinsey)</div></div>
+    <div class="ss-box"><div class="ss-n">12%</div><div class="ss-l">Have scaled AI beyond pilots (Deloitte)</div></div>
+  </div>
+
+  <h2>Opening Remarks Framework</h2>
+  <p>The discussion was designed to bring together CEOs, regulators, academics, and practitioners to tackle real issues — cutting through the hype to address where AI works, where it fails, and how to innovate without crossing regulatory lines.</p>
+
+  <div class="section-card">
+    <span class="sc-tag">Session 1</span>
+    <h3>Trends in AI and Financial Services</h3>
+    <p>Rapid developments across credit, fraud prevention, trading, personalization, and operational automation — each with high potential and high stakes.</p>
+    <div class="question-block">
+      <p>Discussion Question: What's one AI application that's exceeded your expectations? OR why is 2025 such a critical year for AI adoption in banking and what risks do institutions face if they don't act decisively?</p>
+    </div>
+  </div>
+
+  <div class="section-card">
+    <span class="sc-tag">Session 2</span>
+    <h3>AI in Credit Scoring & Lending</h3>
+    <p>Exploring the promise and controversy in AI credit decisioning — and whether machines can truly assess the human elements of trust and character.</p>
+    <div class="question-block">
+      <p>Discussion Question: Can AI truly replicate human instinct in lending decisions — assessing trust or character? Or is that still a myth?</p>
+    </div>
+  </div>
+
+  <div class="section-card">
+    <span class="sc-tag">Session 3</span>
+    <h3>Fraud Prevention & Risk Management</h3>
+    <p>Fraudsters are becoming more sophisticated — using AI themselves. Banks face the challenge of staying ahead across real-time payments and cross-border transactions.</p>
+    <div class="question-block">
+      <p>Discussion Question: What's an emerging fraud tactic that's forcing AI models to evolve? What does staying ahead of AI-powered fraud look like in your institution?</p>
+    </div>
+  </div>
+
+  <div class="section-card">
+    <span class="sc-tag">Session 4</span>
+    <h3>AI in Trading & Investment</h3>
+    <div class="question-block">
+      <p>Discussion Question: If your AI trading bot consistently outperforms human traders for 3 years, would you replace your trading desk? Or is the human element still essential during market shocks?</p>
+    </div>
+  </div>
+
+  <div class="section-card">
+    <span class="sc-tag">Session 5</span>
+    <h3>AI-Driven Personalization</h3>
+    <p>How far is too far when it comes to AI personalization? Enhancing customer value versus risking customer trust — including data sharing implications.</p>
+    <div class="question-block">
+      <p>Discussion Question: Would you share customer data with AI experts to develop better defenses for the industry? Or use open-source AI models like ChatGPT, Claude, or LLaMA for analyzing financial datasets? What are the security implications?</p>
+      <p class="follow">Follow-up: Have you seen measurable ROI in product targeting, customer service, or engagement?</p>
+    </div>
+  </div>
+
+  <div class="section-card">
+    <span class="sc-tag">Session 6</span>
+    <h3>Automation & Quantum Computing Impact</h3>
+    <p>As AI and quantum computing evolve, banks face both opportunity and risk. Quantum could optimize portfolios — but also break modern encryption.</p>
+    <div class="question-block">
+      <p>Discussion Question: Which applications should banks prioritize in response: security, speed, or smarter strategy?</p>
+    </div>
+  </div>
+
+  <h2>Lightning Round Questions</h2>
+  <div class="question-block">
+    <p>What's one AI trend you think is overhyped? And one that's underappreciated?</p>
+  </div>
+
+  <p style="margin-top:32px;font-size:13px;color:var(--text-muted);font-style:italic;">This discussion brief was produced by Arooj as part of her role as Advisory Committee Member and Content Strategist at the AI Association in Banking & Financial Services, New York. The content was reviewed and used in executive-level roundtable discussions with global industry leaders.</p>
+
+</div>
+
+<div class="work-footer">
+  <div class="wf-text">Executive content by <strong>Arooj</strong> · AI Association in Banking & Financial Services, New York</div>
+  <a href="../index.html" class="wf-back">← Back to Portfolio</a>
+</div>
+
+</body>
+</html>
