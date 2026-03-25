@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Investor Strategy Framework | Arooj</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,700;0,9..144,900;1,9..144,400&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{--blue:#2563EB;--blue-dark:#0A1628;--blue-pale:#EFF6FF;--green:#059669;--green-pale:#ECFDF5;--amber:#D97706;--amber-pale:#FFFBEB;--text:#0F172A;--text-mid:#334155;--text-muted:#64748B;--border:#E2E8F0;--white:#FFFFFF;--off-white:#F8FAFF;--serif:'Fraunces',serif;--sans:'Plus Jakarta Sans',sans-serif;}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+body{font-family:var(--sans);background:var(--white);color:var(--text);line-height:1.6;}
+a{text-decoration:none;color:inherit;}
+.top-bar{background:var(--blue-dark);padding:14px 5%;display:flex;align-items:center;justify-content:space-between;}
+.back-btn{display:inline-flex;align-items:center;gap:8px;font-size:13px;font-weight:600;color:rgba(255,255,255,0.7);}
+.back-btn::before{content:'←';}
+.back-btn:hover{color:white;}
+.top-bar-tag{font-size:11px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:#93C5FD;}
+.hero{background:linear-gradient(160deg,var(--blue-dark),#0F2952);padding:56px 5% 48px;text-align:center;}
+.hero-cat{display:inline-block;font-size:11px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:#6EE7B7;margin-bottom:14px;}
+.hero-title{font-family:var(--serif);font-size:clamp(24px,4vw,44px);font-weight:900;color:white;line-height:1.1;margin-bottom:14px;}
+.hero-meta{font-size:13px;color:rgba(255,255,255,0.45);display:flex;align-items:center;justify-content:center;gap:14px;flex-wrap:wrap;}
+.body{max-width:900px;margin:0 auto;padding:52px 5%;}
+h2{font-family:var(--serif);font-size:24px;font-weight:700;color:var(--text);margin:40px 0 14px;}
+p{font-size:14px;color:var(--text-mid);line-height:1.9;margin-bottom:12px;}
+strong{color:var(--text);font-weight:600;}
+
+.num-section{background:var(--off-white);border:1px solid var(--border);border-radius:14px;padding:28px;margin:22px 0;}
+.ns-header{display:flex;align-items:center;gap:12px;margin-bottom:16px;}
+.ns-num{width:36px;height:36px;border-radius:10px;background:linear-gradient(135deg,var(--blue-dark),var(--blue));display:flex;align-items:center;justify-content:center;font-family:var(--serif);font-size:16px;font-weight:700;color:white;flex-shrink:0;}
+.ns-title{font-family:var(--serif);font-size:18px;font-weight:700;color:var(--text);}
+.check-list{list-style:none;}
+.check-list li{font-size:13px;color:var(--text-mid);padding:5px 0;display:flex;gap:10px;align-items:flex-start;line-height:1.6;}
+.check-list li::before{content:'✓';color:var(--green);font-weight:700;font-size:12px;margin-top:2px;flex-shrink:0;}
+
+.warn-list{list-style:none;}
+.warn-list li{font-size:13px;color:var(--text-mid);padding:5px 0;display:flex;gap:10px;align-items:flex-start;line-height:1.6;}
+.warn-list li::before{content:'✗';color:#DC2626;font-weight:700;font-size:12px;margin-top:2px;flex-shrink:0;}
+
+.q-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin:16px 0;}
+.q-item{background:var(--blue-pale);border-radius:10px;padding:14px;font-size:13px;color:var(--text-mid);display:flex;gap:8px;align-items:flex-start;}
+.q-item::before{content:'?';color:var(--blue);font-weight:700;flex-shrink:0;}
+
+.funnel{display:flex;flex-direction:column;gap:10px;margin:16px 0;}
+.funnel-step{display:flex;align-items:center;gap:12px;background:var(--off-white);border:1px solid var(--border);border-radius:10px;padding:12px 16px;}
+.fs-n{font-size:20px;font-weight:700;color:var(--blue);font-family:var(--serif);min-width:80px;}
+.fs-arrow{color:var(--text-muted);font-size:16px;}
+.fs-l{font-size:13px;color:var(--text-mid);}
+
+.work-footer{background:var(--blue-dark);padding:32px 5%;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:14px;}
+.wf-text{font-size:14px;color:rgba(255,255,255,0.5);}
+.wf-text strong{color:white;}
+.wf-back{display:inline-flex;align-items:center;gap:8px;background:var(--blue);color:white;padding:10px 22px;border-radius:8px;font-size:13px;font-weight:600;}
+.wf-back:hover{background:#3B82F6;}
+@media(max-width:600px){.q-grid{grid-template-columns:1fr;}}
+</style>
+</head>
+<body>
+<div class="top-bar">
+  <a href="../index.html" class="back-btn">Back to Portfolio</a>
+  <span class="top-bar-tag">Business Writing · Strategy</span>
+</div>
+<div class="hero">
+  <div class="hero-cat">Business Strategy Document</div>
+  <h1 class="hero-title">Investor Discussion Framework<br>Technology Startup</h1>
+  <div class="hero-meta">
+    <span>📊 Strategic Business Writing</span>
+    <span>✍️ Written by Arooj</span>
+    <span>🎯 Investor-Ready Document</span>
+  </div>
+</div>
+<div class="body">
+
+  <p>This structured investor discussion framework was produced for a technology startup — covering every critical area investors evaluate before committing capital. Designed for use in actual investor meetings.</p>
+
+  <div class="num-section">
+    <div class="ns-header"><div class="ns-num">1</div><div class="ns-title">Why Investors Want to Invest</div></div>
+    <ul class="check-list">
+      <li>Growth potential and scalability of the business</li>
+      <li>Strong market opportunity — large market size and unmet customer needs</li>
+      <li>Solving a real problem with long-term demand</li>
+      <li>Strong, motivated team capable of execution</li>
+      <li>Attractive Return on Investment opportunity</li>
+      <li>Clear vision and exit strategy for investors</li>
+    </ul>
+  </div>
+
+  <div class="num-section">
+    <div class="ns-header"><div class="ns-num">2</div><div class="ns-title">What Investors Need to Know</div></div>
+    <ul class="check-list">
+      <li>Market Research: size, competition, and opportunities</li>
+      <li>Customer Target: acquisition roadmap and projections</li>
+      <li>Problems Solved: today and what can be solved in future</li>
+      <li>Revenue Model: how the business makes money</li>
+      <li>Vision and Future Plan: long-term goals and growth strategy</li>
+      <li>Team Strength: skills, intellectual capacity, and execution history</li>
+      <li>Technology Stack: tools and systems used to operate and scale</li>
+      <li>Financials: revenue, projections, expenses, and use of funds</li>
+    </ul>
+  </div>
+
+  <div class="num-section">
+    <div class="ns-header"><div class="ns-num">3</div><div class="ns-title">Customer Acquisition Roadmap</div></div>
+    <div class="funnel">
+      <div class="funnel-step"><div class="fs-n">100</div><div class="fs-arrow">→</div><div class="fs-l">First customers — proof of concept, manual outreach, referrals</div></div>
+      <div class="funnel-step"><div class="fs-n">1,000</div><div class="fs-arrow">→</div><div class="fs-l">Scaled acquisition — paid ads, partnerships, product-market fit confirmed</div></div>
+      <div class="funnel-step"><div class="fs-n">1 Lakh</div><div class="fs-arrow">→</div><div class="fs-l">Platform scale — automated systems, brand recognition, viral loops</div></div>
+    </div>
+  </div>
+
+  <div class="num-section">
+    <div class="ns-header"><div class="ns-num">4</div><div class="ns-title">Team Management Strategy</div></div>
+    <ul class="check-list">
+      <li>People not delivering: replace promptly and transparently</li>
+      <li>People with potential but stuck: motivate, train, and grow</li>
+      <li>Core intellectual property team: treat as partners with fair rewards</li>
+      <li>Retention: reward top performers beyond their expectations</li>
+      <li>Transparent processes to build deep internal trust</li>
+    </ul>
+  </div>
+
+  <div class="num-section">
+    <div class="ns-header"><div class="ns-num">5</div><div class="ns-title">Investor Questions Preparation</div></div>
+    <div class="q-grid">
+      <div class="q-item">How much money do you need and in which areas will it be used?</div>
+      <div class="q-item">How long until you generate profit?</div>
+      <div class="q-item">How will investors make money — ROI, equity growth, exit?</div>
+      <div class="q-item">How will you get your first 100, 1000, 1 lakh customers?</div>
+      <div class="q-item">Who are your competitors and how are you different?</div>
+      <div class="q-item">What are your current financials — P&L, debts, growth rate?</div>
+      <div class="q-item">What is the market size opportunity?</div>
+      <div class="q-item">What is the exit strategy for investors?</div>
+    </div>
+  </div>
+
+  <div class="num-section">
+    <div class="ns-header"><div class="ns-num">6</div><div class="ns-title">Investor Pitch Rules</div></div>
+    <ul class="warn-list">
+      <li>Never say "we don't have competition"</li>
+      <li>Don't give unrealistic projections</li>
+      <li>Don't be unclear or overly conservative</li>
+      <li>Never be non-transparent about current financials</li>
+    </ul>
+    <ul class="check-list" style="margin-top:12px;">
+      <li>Always show exactly how much money you need and what % equity you offer</li>
+      <li>Be specific about roles and responsibilities for both sides</li>
+      <li>Verify every claim you make with data</li>
+      <li>Be transparent and practical — investors value honesty over optimism</li>
+    </ul>
+  </div>
+
+  <p style="margin-top:32px;font-size:13px;color:var(--text-muted);font-style:italic;">This investor strategy framework was produced by Arooj as a business writing and strategic documentation project. It demonstrates the ability to structure complex business information clearly for high-stakes professional audiences.</p>
+
+</div>
+<div class="work-footer">
+  <div class="wf-text">Business Strategy Writing by <strong>Arooj</strong> · AI Technical Writer & Developer</div>
+  <a href="../index.html" class="wf-back">← Back to Portfolio</a>
+</div>
+</body>
+</html>
