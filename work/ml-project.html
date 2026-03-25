@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Machine Learning Projects | Arooj Fatima</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,700;0,9..144,900;1,9..144,400&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
+<style>
+:root{--blue:#2563EB;--blue-dark:#0A1628;--blue-pale:#EFF6FF;--green:#059669;--green-pale:#ECFDF5;--amber:#D97706;--amber-pale:#FFFBEB;--purple:#7C3AED;--purple-pale:#F3E8FF;--text:#0F172A;--text-mid:#334155;--text-muted:#64748B;--border:#E2E8F0;--white:#FFFFFF;--off-white:#F8FAFF;--serif:'Fraunces',serif;--sans:'Plus Jakarta Sans',sans-serif;}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+html{scroll-behavior:smooth;}
+body{font-family:var(--sans);background:var(--white);color:var(--text);line-height:1.6;}
+a{text-decoration:none;color:inherit;}
+
+.top-bar{background:var(--blue-dark);padding:14px 5%;display:flex;align-items:center;justify-content:space-between;}
+.back-btn{display:inline-flex;align-items:center;gap:8px;font-size:13px;font-weight:600;color:rgba(255,255,255,0.7);transition:color 0.2s;}
+.back-btn:hover{color:white;}
+.back-btn::before{content:'←';}
+.top-bar-tag{font-size:11px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:#6EE7B7;}
+
+.hero{background:linear-gradient(160deg,#0F172A,#0F2952,#1E1B4B);padding:60px 5% 50px;text-align:center;}
+.hero-cat{display:inline-block;font-size:11px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:#6EE7B7;margin-bottom:14px;}
+.hero-title{font-family:var(--serif);font-size:clamp(26px,4.5vw,52px);font-weight:900;color:white;line-height:1.1;margin-bottom:14px;}
+.hero-title em{color:#93C5FD;font-style:italic;}
+.hero-meta{font-size:13px;color:rgba(255,255,255,0.45);display:flex;align-items:center;justify-content:center;gap:16px;flex-wrap:wrap;}
+.hero-desc{font-size:15px;color:rgba(255,255,255,0.6);max-width:660px;margin:16px auto 0;line-height:1.8;}
+
+/* TABS */
+.tabs-container{background:var(--off-white);border-bottom:1px solid var(--border);position:sticky;top:0;z-index:50;}
+.tabs{display:flex;max-width:1000px;margin:0 auto;padding:0 5%;gap:0;overflow-x:auto;}
+.tab{padding:16px 24px;font-size:13px;font-weight:600;color:var(--text-muted);cursor:pointer;border-bottom:3px solid transparent;transition:all 0.2s;white-space:nowrap;}
+.tab:hover{color:var(--blue);}
+.tab.active{color:var(--blue);border-bottom-color:var(--blue);}
+
+.body{max-width:1000px;margin:0 auto;padding:52px 5%;}
+.section{display:none;}
+.section.active{display:block;}
+
+h2{font-family:var(--serif);font-size:28px;font-weight:700;color:var(--text);margin:0 0 12px;}
+h2 em{color:var(--blue);font-style:italic;}
+h3{font-size:17px;font-weight:700;color:var(--text);margin:28px 0 10px;}
+p{font-size:14px;color:var(--text-mid);line-height:1.9;margin-bottom:12px;}
+strong{color:var(--text);font-weight:600;}
+
+/* STAT BOXES */
+.stat-row{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin:28px 0;}
+.stat-box{background:var(--blue-dark);border-radius:12px;padding:18px;text-align:center;}
+.stat-box.green{background:linear-gradient(135deg,#064E3B,#065F46);}
+.stat-box.purple{background:linear-gradient(135deg,#3B0764,#4C1D95);}
+.stat-box.amber{background:linear-gradient(135deg,#78350F,#92400E);}
+.stat-box .n{font-family:var(--serif);font-size:26px;font-weight:700;color:#93C5FD;}
+.stat-box.green .n{color:#6EE7B7;}
+.stat-box.purple .n{color:#C4B5FD;}
+.stat-box.amber .n{color:#FCD34D;}
+.stat-box .l{font-size:11px;color:rgba(255,255,255,0.45);margin-top:4px;}
+
+/* DATASET CARDS */
+.dataset-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin:24px 0;}
+.ds-card{background:var(--off-white);border:1px solid var(--border);border-radius:14px;padding:22px;}
+.ds-badge{display:inline-block;font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:1px;padding:3px 10px;border-radius:4px;margin-bottom:10px;}
+.ds-badge.titanic{background:var(--blue-pale);color:var(--blue);}
+.ds-badge.diabetes{background:var(--green-pale);color:var(--green);}
+.ds-badge.iris{background:var(--purple-pale);color:var(--purple);}
+.ds-title{font-family:var(--serif);font-size:17px;font-weight:700;color:var(--text);margin-bottom:6px;}
+.ds-desc{font-size:12px;color:var(--text-muted);line-height:1.7;margin-bottom:12px;}
+.ds-tags{display:flex;flex-wrap:wrap;gap:5px;}
+.ds-tag{font-size:9px;font-weight:600;padding:2px 7px;border-radius:4px;background:var(--off-white);border:1px solid var(--border);color:var(--text-muted);text-transform:uppercase;}
+
+/* CHART CONTAINERS */
+.chart-grid{display:grid;grid-template-columns:1fr 1fr;gap:24px;margin:28px 0;}
+.chart-card{background:white;border:1px solid var(--border);border-radius:16px;padding:24px;box-shadow:0 2px 12px rgba(0,0,0,0.04);}
+.chart-card.full{grid-column:1/-1;}
+.chart-title{font-size:14px;font-weight:700;color:var(--text);margin-bottom:4px;}
+.chart-sub{font-size:11px;color:var(--text-muted);margin-bottom:16px;}
+.chart-wrap{position:relative;height:280px;}
+.chart-wrap.tall{height:340px;}
+
+/* MODEL RESULTS */
+.model-result{background:var(--off-white);border:1px solid var(--border);border-radius:14px;padding:24px;margin:16px 0;}
+.mr-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:16px;flex-wrap:wrap;gap:10px;}
+.mr-title{font-family:var(--serif);font-size:18px;font-weight:700;color:var(--text);}
+.mr-acc{display:inline-flex;align-items:center;gap:6px;padding:6px 16px;border-radius:50px;font-size:13px;font-weight:700;}
+.mr-acc.high{background:var(--green-pale);color:var(--green);}
+.mr-acc.mid{background:var(--amber-pale);color:var(--amber);}
+.metrics-row{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-top:12px;}
+.met-box{background:white;border:1px solid var(--border);border-radius:10px;padding:12px;text-align:center;}
+.met-n{font-size:18px;font-weight:700;font-family:var(--serif);color:var(--blue);}
+.met-n.green{color:var(--green);}
+.met-l{font-size:10px;color:var(--text-muted);margin-top:2px;}
+
+/* CODE */
+.code-block{background:#0F172A;border-radius:12px;padding:22px;margin:16px 0;overflow-x:auto;}
+.code-block pre{font-family:'Courier New',monospace;font-size:12px;color:#E2E8F0;line-height:1.8;}
+.cm{color:#64748B;}
+.cs{color:#86EFAC;}
+.ck{color:#93C5FD;}
+.co{color:#FCD34D;}
+
+/* PANDASAI DEMO */
+.pandasai-box{background:linear-gradient(135deg,#0F172A,#1E293B);border-radius:16px;padding:28px;margin:24px 0;}
+.pab-label{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:1.5px;color:#6EE7B7;margin-bottom:16px;}
+.pab-title{font-family:var(--serif);font-size:22px;font-weight:700;color:white;margin-bottom:10px;}
+.pab-desc{font-size:14px;color:rgba(255,255,255,0.6);line-height:1.8;margin-bottom:20px;}
+.pab-key-box{background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.1);border-radius:10px;padding:16px;margin:16px 0;}
+.pab-key-label{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:rgba(255,255,255,0.4);margin-bottom:6px;}
+.pab-key{font-family:'Courier New',monospace;font-size:12px;color:#6EE7B7;}
+.pab-examples{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:16px;}
+.pab-ex{background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);border-radius:8px;padding:12px;}
+.pab-ex-q{font-size:12px;color:#93C5FD;font-weight:600;margin-bottom:4px;}
+.pab-ex-a{font-size:11px;color:rgba(255,255,255,0.5);}
+
+/* CONFUSION MATRIX */
+.cm-grid{display:grid;grid-template-columns:auto 1fr 1fr;gap:4px;max-width:280px;margin:16px 0;}
+.cm-cell{display:flex;align-items:center;justify-content:center;height:60px;border-radius:8px;font-size:13px;font-weight:700;}
+.cm-label{background:none;font-size:11px;color:var(--text-muted);font-weight:600;}
+.cm-tp{background:#ECFDF5;color:#059669;}
+.cm-fp{background:#FEF2F2;color:#DC2626;}
+.cm-fn{background:#FEF2F2;color:#DC2626;}
+.cm-tn{background:#ECFDF5;color:#059669;}
+
+/* WORKFLOW */
+.workflow{display:flex;flex-direction:column;gap:0;}
+.wf-step{display:flex;gap:16px;padding:18px 0;border-bottom:1px solid var(--border);}
+.wf-step:last-child{border-bottom:none;}
+.wf-num{width:34px;height:34px;border-radius:50%;background:var(--blue-pale);display:flex;align-items:center;justify-content:center;font-weight:700;color:var(--blue);font-size:13px;flex-shrink:0;}
+.wf-title{font-size:14px;font-weight:700;color:var(--text);margin-bottom:3px;}
+.wf-desc{font-size:13px;color:var(--text-muted);line-height:1.6;}
+.wf-tags{display:flex;flex-wrap:wrap;gap:5px;margin-top:6px;}
+.wf-tag{font-size:10px;font-weight:600;padding:2px 8px;border-radius:4px;background:var(--green-pale);color:var(--green);text-transform:uppercase;}
+
+.insight-box{border-left:3px solid var(--blue);padding:14px 18px;background:var(--blue-pale);border-radius:0 10px 10px 0;margin:12px 0;font-size:13px;color:var(--text-mid);line-height:1.7;}
+.insight-box strong{color:var(--blue);}
+
+.work-footer{background:var(--blue-dark);padding:32px 5%;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:14px;}
+.wf-text{font-size:14px;color:rgba(255,255,255,0.5);}
+.wf-text strong{color:white;}
+.wf-back{display:inline-flex;align-items:center;gap:8px;background:var(--blue);color:white;padding:10px 22px;border-radius:8px;font-size:13px;font-weight:600;transition:all 0.2s;}
+.wf-back:hover{background:#3B82F6;}
+
+@media(max-width:700px){
+  .stat-row{grid-template-columns:repeat(2,1fr);}
+  .chart-grid{grid-template-columns:1fr;}
+  .chart-card.full{grid-column:auto;}
+  .dataset-grid{grid-template-columns:1fr;}
+  .metrics-row{grid-template-columns:repeat(2,1fr);}
+  .pab-examples{grid-template-columns:1fr;}
+}
+</style>
+</head>
+<body>
+
+<div class="top-bar">
+  <a href="../index.html" class="back-btn">Back to Portfolio</a>
+  <span class="top-bar-tag">Machine Learning · Data Science · Python</span>
+</div>
+
+<div class="hero">
+  <div class="hero-cat">Machine Learning Projects</div>
+  <h1 class="hero-title">Titanic · Diabetes · Iris<br><em>Three Datasets, Real ML</em></h1>
+  <div class="hero-meta">
+    <span>🧠 KNN · Logistic Regression · Decision Tree</span>
+    <span>🐍 Python · Scikit-learn · Seaborn</span>
+    <span>✍️ Built by Arooj Fatima</span>
+  </div>
+  <p class="hero-desc">End-to-end machine learning — exploratory data analysis, model training, evaluation metrics, and visualizations across three real datasets. Also includes a PandasAI integration so developers can query data in plain English.</p>
+</div>
+
+<div class="tabs-container">
+  <div class="tabs">
+    <div class="tab active" onclick="showTab('overview')">📊 Overview</div>
+    <div class="tab" onclick="showTab('titanic')">🚢 Titanic EDA</div>
+    <div class="tab" onclick="showTab('diabetes')">🩺 Diabetes Models</div>
+    <div class="tab" onclick="showTab('iris')">🌸 Iris KNN</div>
+    <div class="tab" onclick="showTab('pandasai')">🤖 PandasAI</div>
+  </div>
+</div>
+
+<div class="body">
+
+<!-- OVERVIEW TAB -->
+<div class="section active" id="tab-overview">
+  <h2>ML Projects <em>Overview</em></h2>
+  <p>Three datasets, multiple ML algorithms, and complete data science workflows — from raw data loading to model evaluation. This page showcases the work done across all three projects.</p>
+
+  <div class="stat-row">
+    <div class="stat-box"><div class="n">3</div><div class="l">Datasets</div></div>
+    <div class="stat-box green"><div class="n">78%</div><div class="l">Logistic Regression Accuracy</div></div>
+    <div class="stat-box purple"><div class="n">100%</div><div class="l">Iris KNN Accuracy</div></div>
+    <div class="stat-box amber"><div class="n">891</div><div class="l">Titanic Passengers Analysed</div></div>
+  </div>
+
+  <div class="dataset-grid">
+    <div class="ds-card">
+      <div class="ds-badge titanic">Dataset 1</div>
+      <div class="ds-title">🚢 Titanic</div>
+      <p class="ds-desc">891 passengers, 12 features. EDA focus — survival rates by class, gender, age. Seaborn + Matplotlib + Plotly visualizations.</p>
+      <div class="ds-tags"><span class="ds-tag">EDA</span><span class="ds-tag">Classification</span><span class="ds-tag">891 rows</span></div>
+    </div>
+    <div class="ds-card">
+      <div class="ds-badge diabetes">Dataset 2</div>
+      <div class="ds-title">🩺 Diabetes (Pima)</div>
+      <p class="ds-desc">768 patient records, 9 features. Logistic Regression + KNN + Decision Tree trained and evaluated. Binary classification.</p>
+      <div class="ds-tags"><span class="ds-tag">Logistic Reg.</span><span class="ds-tag">KNN</span><span class="ds-tag">Decision Tree</span></div>
+    </div>
+    <div class="ds-card">
+      <div class="ds-badge iris">Dataset 3</div>
+      <div class="ds-title">🌸 Iris</div>
+      <p class="ds-desc">150 flower samples, 4 features. KNN classifier achieving 100% accuracy on test set. Multi-class classification.</p>
+      <div class="ds-tags"><span class="ds-tag">KNN</span><span class="ds-tag">Multi-class</span><span class="ds-tag">150 rows</span></div>
+    </div>
+  </div>
+
+  <div class="chart-grid">
+    <div class="chart-card">
+      <div class="chart-title">Model Accuracy Comparison</div>
+      <div class="chart-sub">Across all trained models and datasets</div>
+      <div class="chart-wrap"><canvas id="accuracyChart"></canvas></div>
+    </div>
+    <div class="chart-card">
+      <div class="chart-title">Workflow Steps Distribution</div>
+      <div class="chart-sub">Time spent per data science phase</div>
+      <div class="chart-wrap"><canvas id="workflowChart"></canvas></div>
+    </div>
+  </div>
+
+  <h3>Complete ML Workflow</h3>
+  <div class="workflow">
+    <div class="wf-step">
+      <div class="wf-num">1</div>
+      <div>
+        <div class="wf-title">Data Loading & Exploration</div>
+        <div class="wf-desc">Load CSV files with Pandas. Check .info(), .describe(), .shape(). Identify missing values and data types for each feature.</div>
+        <div class="wf-tags"><span class="wf-tag">Pandas</span><span class="wf-tag">NumPy</span></div>
+      </div>
+    </div>
+    <div class="wf-step">
+      <div class="wf-num">2</div>
+      <div>
+        <div class="wf-title">Exploratory Data Analysis (EDA)</div>
+        <div class="wf-desc">Distribution plots, count plots, histograms, correlation heatmaps, and dynamic interactive charts with Plotly Express.</div>
+        <div class="wf-tags"><span class="wf-tag">Seaborn</span><span class="wf-tag">Matplotlib</span><span class="wf-tag">Plotly</span></div>
+      </div>
+    </div>
+    <div class="wf-step">
+      <div class="wf-num">3</div>
+      <div>
+        <div class="wf-title">Data Preprocessing</div>
+        <div class="wf-desc">Handle missing values via median imputation. Apply StandardScaler for feature normalization. Split into train/test sets (70/30 split).</div>
+        <div class="wf-tags"><span class="wf-tag">StandardScaler</span><span class="wf-tag">train_test_split</span></div>
+      </div>
+    </div>
+    <div class="wf-step">
+      <div class="wf-num">4</div>
+      <div>
+        <div class="wf-title">Model Training</div>
+        <div class="wf-desc">Train Logistic Regression, K-Nearest Neighbours (k=5), and Decision Tree classifiers. Fit on training data, predict on test data.</div>
+        <div class="wf-tags"><span class="wf-tag">LogisticRegression</span><span class="wf-tag">KNeighborsClassifier</span><span class="wf-tag">DecisionTreeClassifier</span></div>
+      </div>
+    </div>
+    <div class="wf-step">
+      <div class="wf-num">5</div>
+      <div>
+        <div class="wf-title">Model Evaluation</div>
+        <div class="wf-desc">Accuracy score, confusion matrix, and full classification report (precision, recall, F1-score). Compare models side by side.</div>
+        <div class="wf-tags"><span class="wf-tag">accuracy_score</span><span class="wf-tag">confusion_matrix</span><span class="wf-tag">classification_report</span></div>
+      </div>
+    </div>
