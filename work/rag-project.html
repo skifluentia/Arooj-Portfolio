@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>RAG Document Query System | Arooj</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,700;0,9..144,900;1,9..144,400&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{--blue:#2563EB;--blue-dark:#0A1628;--blue-pale:#EFF6FF;--green:#059669;--green-pale:#ECFDF5;--text:#0F172A;--text-mid:#334155;--text-muted:#64748B;--border:#E2E8F0;--white:#FFFFFF;--off-white:#F8FAFF;--serif:'Fraunces',serif;--sans:'Plus Jakarta Sans',sans-serif;}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+body{font-family:var(--sans);background:var(--white);color:var(--text);line-height:1.6;}
+a{text-decoration:none;color:inherit;}
+.top-bar{background:var(--blue-dark);padding:14px 5%;display:flex;align-items:center;justify-content:space-between;}
+.back-btn{display:inline-flex;align-items:center;gap:8px;font-size:13px;font-weight:600;color:rgba(255,255,255,0.7);}
+.back-btn::before{content:'←';}
+.back-btn:hover{color:white;}
+.top-bar-tag{font-size:11px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:#93C5FD;}
+.hero{background:linear-gradient(160deg,var(--blue-dark),#0F2952);padding:56px 5% 48px;text-align:center;}
+.hero-cat{display:inline-block;font-size:11px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:#93C5FD;margin-bottom:14px;}
+.hero-title{font-family:var(--serif);font-size:clamp(24px,4vw,44px);font-weight:900;color:white;line-height:1.1;margin-bottom:14px;}
+.hero-meta{font-size:13px;color:rgba(255,255,255,0.45);display:flex;align-items:center;justify-content:center;gap:14px;flex-wrap:wrap;}
+.body{max-width:900px;margin:0 auto;padding:52px 5%;}
+h2{font-family:var(--serif);font-size:24px;font-weight:700;color:var(--text);margin:40px 0 14px;}
+p{font-size:14px;color:var(--text-mid);line-height:1.9;margin-bottom:12px;}
+strong{color:var(--text);font-weight:600;}
+
+.arch-flow{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin:24px 0;}
+.af-box{background:var(--blue-dark);border-radius:12px;padding:18px;text-align:center;}
+.af-icon{font-size:28px;margin-bottom:8px;}
+.af-title{font-size:12px;font-weight:700;color:white;margin-bottom:4px;}
+.af-sub{font-size:10px;color:rgba(255,255,255,0.4);}
+.af-arrow{display:flex;align-items:center;justify-content:center;color:var(--blue);font-size:20px;padding-top:20px;}
+
+.tech-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin:20px 0;}
+.tech-card{background:var(--off-white);border:1px solid var(--border);border-radius:10px;padding:16px;}
+.tc-icon{font-size:22px;margin-bottom:8px;}
+.tc-name{font-size:13px;font-weight:700;color:var(--text);margin-bottom:4px;}
+.tc-desc{font-size:11px;color:var(--text-muted);line-height:1.5;}
+
+.use-case{background:var(--green-pale);border:1px solid rgba(5,150,105,0.2);border-radius:12px;padding:20px;margin:14px 0;}
+.uc-title{font-size:14px;font-weight:700;color:var(--green);margin-bottom:6px;}
+.uc-desc{font-size:13px;color:var(--text-mid);}
+
+.code-block{background:#0F172A;border-radius:10px;padding:20px;margin:16px 0;overflow-x:auto;}
+.code-block pre{font-family:'Courier New',monospace;font-size:12px;color:#E2E8F0;line-height:1.7;}
+.code-block .comment{color:#64748B;}
+.code-block .string{color:#86EFAC;}
+.code-block .keyword{color:#93C5FD;}
+
+.work-footer{background:var(--blue-dark);padding:32px 5%;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:14px;}
+.wf-text{font-size:14px;color:rgba(255,255,255,0.5);}
+.wf-text strong{color:white;}
+.wf-back{display:inline-flex;align-items:center;gap:8px;background:var(--blue);color:white;padding:10px 22px;border-radius:8px;font-size:13px;font-weight:600;}
+.wf-back:hover{background:#3B82F6;}
+@media(max-width:700px){.arch-flow{grid-template-columns:repeat(2,1fr);}.tech-grid{grid-template-columns:repeat(2,1fr);}.af-arrow{display:none;}}
+</style>
+</head>
+<body>
+<div class="top-bar">
+  <a href="../index.html" class="back-btn">Back to Portfolio</a>
+  <span class="top-bar-tag">AI Development · RAG System</span>
+</div>
+<div class="hero">
+  <div class="hero-cat">AI Development Project</div>
+  <h1 class="hero-title">RAG Document Query System<br>LangChain & Vector Databases</h1>
+  <div class="hero-meta">
+    <span>🤖 Retrieval Augmented Generation</span>
+    <span>✍️ Built by Arooj</span>
+    <span>🐍 Python · LangChain · NLP</span>
+  </div>
+</div>
+<div class="body">
+
+  <p>This project demonstrates the development of an AI-powered document query system using Retrieval Augmented Generation (RAG) architecture. The system allows users to query large document sets in natural language and receive accurate, context-aware responses.</p>
+
+  <h2>System Architecture</h2>
+  <div class="arch-flow">
+    <div class="af-box">
+      <div class="af-icon">📄</div>
+      <div class="af-title">Document Input</div>
+      <div class="af-sub">PDF, TXT, CSV files loaded into system</div>
+    </div>
+    <div class="af-box">
+      <div class="af-icon">✂️</div>
+      <div class="af-title">Text Chunking</div>
+      <div class="af-sub">Documents split into semantic chunks</div>
+    </div>
+    <div class="af-box">
+      <div class="af-icon">🔢</div>
+      <div class="af-title">Embeddings</div>
+      <div class="af-sub">Chunks converted to vector representations</div>
+    </div>
+    <div class="af-box">
+      <div class="af-icon">💬</div>
+      <div class="af-title">Query & Retrieve</div>
+      <div class="af-sub">Natural language query returns relevant context</div>
+    </div>
+  </div>
+
+  <h2>Technology Stack</h2>
+  <div class="tech-grid">
+    <div class="tech-card">
+      <div class="tc-icon">🦜</div>
+      <div class="tc-name">LangChain</div>
+      <div class="tc-desc">Orchestration framework for chaining LLM calls and retrieval pipelines</div>
+    </div>
+    <div class="tech-card">
+      <div class="tc-icon">📊</div>
+      <div class="tc-name">Vector Database</div>
+      <div class="tc-desc">Stores and retrieves document embeddings for semantic similarity search</div>
+    </div>
+    <div class="tech-card">
+      <div class="tc-icon">🐍</div>
+      <div class="tc-name">Python</div>
+      <div class="tc-desc">Core development language for all pipeline components and automation</div>
+    </div>
+    <div class="tech-card">
+      <div class="tc-icon">🧠</div>
+      <div class="tc-name">NLP Pipeline</div>
+      <div class="tc-desc">Text preprocessing, tokenization, and semantic understanding layers</div>
+    </div>
+    <div class="tech-card">
+      <div class="tc-icon">🔗</div>
+      <div class="tc-name">LLM Integration</div>
+      <div class="tc-desc">Connected to large language models for final answer generation</div>
+    </div>
+    <div class="tech-card">
+      <div class="tc-icon">⚡</div>
+      <div class="tc-name">Automation</div>
+      <div class="tc-desc">Automated ingestion, processing, and query workflows</div>
+    </div>
+  </div>
+
+  <h2>Use Cases This System Enables</h2>
+
+  <div class="use-case">
+    <div class="uc-title">📚 Document Intelligence</div>
+    <p class="uc-desc">Query large collections of PDFs, reports, or documentation in plain English — "What does the contract say about termination clauses?" — and get accurate, cited answers.</p>
+  </div>
+
+  <div class="use-case">
+    <div class="uc-title">🏦 Financial Document Analysis</div>
+    <p class="uc-desc">Instantly extract insights from financial reports, compliance documents, or research papers without manual reading — directly relevant to banking and fintech applications.</p>
+  </div>
+
+  <div class="use-case">
+    <div class="uc-title">🤖 Custom Knowledge Base</div>
+    <p class="uc-desc">Build company-specific AI assistants that answer questions from internal documentation — manuals, policies, knowledge bases — with full data privacy (runs locally).</p>
+  </div>
+
+  <h2>Sample Code Structure</h2>
+  <div class="code-block">
+<pre><span class="comment"># RAG Pipeline — Core Components</span>
+<span class="keyword">from</span> langchain.document_loaders <span class="keyword">import</span> PDFLoader
+<span class="keyword">from</span> langchain.text_splitter <span class="keyword">import</span> RecursiveCharacterTextSplitter
+<span class="keyword">from</span> langchain.embeddings <span class="keyword">import</span> OpenAIEmbeddings
+<span class="keyword">from</span> langchain.vectorstores <span class="keyword">import</span> Chroma
+<span class="keyword">from</span> langchain.chains <span class="keyword">import</span> RetrievalQA
+
+<span class="comment"># Load and chunk documents</span>
+loader = PDFLoader(<span class="string">"financial_report.pdf"</span>)
+documents = loader.load()
+splitter = RecursiveCharacterTextSplitter(chunk_size=<span class="string">1000</span>)
+chunks = splitter.split_documents(documents)
+
+<span class="comment"># Create vector store</span>
+vectordb = Chroma.from_documents(chunks, OpenAIEmbeddings())
+
+<span class="comment"># Query in natural language</span>
+qa_chain = RetrievalQA.from_chain_type(llm, retriever=vectordb.as_retriever())
+answer = qa_chain.run(<span class="string">"What was the fraud detection improvement percentage?"</span>)</pre>
+  </div>
+
+  <p style="margin-top:32px;font-size:13px;color:var(--text-muted);font-style:italic;">This project was developed as part of AI and ML exploration work, applying RAG architecture to practical document intelligence problems. The system is designed with data privacy in mind — documents are processed locally without sending sensitive data to external APIs.</p>
+
+</div>
+<div class="work-footer">
+  <div class="wf-text">RAG Development by <strong>Arooj</strong> · BS Computer Science · AI Technical Writer & Developer</div>
+  <a href="../index.html" class="wf-back">← Back to Portfolio</a>
+</div>
+</body>
+</html>
