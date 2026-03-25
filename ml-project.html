@@ -600,8 +600,6 @@ function showTab(name) {
   document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
   document.getElementById('tab-' + name).classList.add('active');
   event.target.classList.add('active');
-  // Redraw charts after tab switch
-  setTimeout(() => drawCharts(), 100);
 }
 
 const BLUE = '#2563EB', GREEN = '#059669', AMBER = '#D97706', PURPLE = '#7C3AED';
@@ -609,6 +607,12 @@ const BLUE_PALE = 'rgba(37,99,235,0.15)', GREEN_PALE = 'rgba(5,150,105,0.15)';
 
 Chart.defaults.font.family = "'Plus Jakarta Sans', sans-serif";
 Chart.defaults.color = '#64748B';
+const chartRegistry = {};
+function makeChart(id, config) {
+  if (chartRegistry[id]) { chartRegistry[id].destroy(); }
+  const el = document.getElementById(id);
+  if (el) { chartRegistry[id] = new Chart(el, config); }
+}
 
 let chartsDrawn = false;
 
@@ -617,7 +621,7 @@ function drawCharts() {
   chartsDrawn = true;
 
   // Overview - Accuracy Bar
-  new Chart(document.getElementById('accuracyChart'), {
+  makeChart('accuracyChart', {
     type: 'bar',
     data: {
       labels: ['Log. Regression\n(Diabetes)', 'KNN k=5\n(Diabetes)', 'Decision Tree\n(Diabetes)', 'KNN k=5\n(Iris)'],
@@ -633,7 +637,7 @@ function drawCharts() {
   });
 
   // Overview - Workflow Pie
-  new Chart(document.getElementById('workflowChart'), {
+  makeChart('workflowChart', {
     type: 'doughnut',
     data: {
       labels: ['Data Loading', 'EDA & Viz', 'Preprocessing', 'Model Training', 'Evaluation'],
@@ -643,7 +647,7 @@ function drawCharts() {
   });
 
   // Titanic - Class Chart
-  new Chart(document.getElementById('titanicClassChart'), {
+  makeChart('titanicClassChart', {
     type: 'bar',
     data: {
       labels: ['1st Class', '2nd Class', '3rd Class'],
@@ -656,7 +660,7 @@ function drawCharts() {
   });
 
   // Titanic - Gender Chart
-  new Chart(document.getElementById('titanicGenderChart'), {
+  makeChart('titanicGenderChart', {
     type: 'bar',
     data: {
       labels: ['Female', 'Male'],
@@ -670,7 +674,7 @@ function drawCharts() {
 
   // Titanic - Age Distribution
   const ageBins = ['0-9','10-19','20-29','30-39','40-49','50-59','60-69','70+'];
-  new Chart(document.getElementById('titanicAgeChart'), {
+  makeChart('titanicAgeChart', {
     type: 'bar',
     data: {
       labels: ageBins,
@@ -680,7 +684,7 @@ function drawCharts() {
   });
 
   // Titanic - Embarked
-  new Chart(document.getElementById('titanicEmbarkedChart'), {
+  makeChart('titanicEmbarkedChart', {
     type: 'bar',
     data: {
       labels: ['Cherbourg (C)', 'Queenstown (Q)', 'Southampton (S)'],
@@ -693,7 +697,7 @@ function drawCharts() {
   });
 
   // Titanic - Fare by class
-  new Chart(document.getElementById('titanicFareChart'), {
+  makeChart('titanicFareChart', {
     type: 'bar',
     data: {
       labels: ['1st Class', '2nd Class', '3rd Class'],
@@ -705,7 +709,7 @@ function drawCharts() {
   });
 
   // Diabetes - Accuracy comparison
-  new Chart(document.getElementById('diabetesAccChart'), {
+  makeChart('diabetesAccChart', {
     type: 'bar',
     data: {
       labels: ['Logistic Regression', 'KNN (k=5)', 'Decision Tree'],
@@ -715,7 +719,7 @@ function drawCharts() {
   });
 
   // Confusion Matrix heatmap
-  new Chart(document.getElementById('confusionChart'), {
+  makeChart('confusionChart', {
     type: 'bar',
     data: {
       labels: ['True Pos', 'False Pos', 'False Neg', 'True Neg'],
@@ -725,7 +729,7 @@ function drawCharts() {
   });
 
   // Feature importance
-  new Chart(document.getElementById('featureChart'), {
+  makeChart('featureChart', {
     type: 'bar',
     data: {
       labels: ['Glucose', 'BMI', 'Age', 'DiabetesPedigreeFunction', 'Pregnancies', 'BloodPressure', 'Insulin', 'SkinThickness'],
@@ -735,7 +739,7 @@ function drawCharts() {
   });
 
   // Iris - Feature measurements
-  new Chart(document.getElementById('irisFeatureChart'), {
+  makeChart('irisFeatureChart', {
     type: 'radar',
     data: {
       labels: ['Sepal Length', 'Sepal Width', 'Petal Length', 'Petal Width'],
@@ -749,7 +753,7 @@ function drawCharts() {
   });
 
   // Iris - Distribution
-  new Chart(document.getElementById('irisDistChart'), {
+  makeChart('irisDistChart', {
     type: 'pie',
     data: {
       labels: ['Setosa (50)', 'Versicolor (50)', 'Virginica (50)'],
@@ -759,7 +763,7 @@ function drawCharts() {
   });
 
   // Iris - Scatter (simulated as bubble)
-  new Chart(document.getElementById('irisScatterChart'), {
+  makeChart('irisScatterChart', {
     type: 'scatter',
     data: {
       datasets: [
@@ -772,7 +776,7 @@ function drawCharts() {
   });
 
   // PandasAI use cases
-  new Chart(document.getElementById('pandasaiChart'), {
+  makeChart('pandasaiChart', {
     type: 'doughnut',
     data: {
       labels: ['Statistical Summaries', 'Chart Generation', 'Filtering & Grouping', 'Correlation Analysis', 'Predictions'],
@@ -782,7 +786,7 @@ function drawCharts() {
   });
 
   // Time savings
-  new Chart(document.getElementById('timeChart'), {
+  makeChart('timeChart', {
     type: 'bar',
     data: {
       labels: ['Simple Stats', 'Grouped Analysis', 'Chart Generation', 'Correlation', 'Full Report'],
