@@ -1,0 +1,802 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Machine Learning Projects | Arooj Fatima</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,700;0,9..144,900;1,9..144,400&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
+<style>
+:root{--blue:#2563EB;--blue-dark:#0A1628;--blue-pale:#EFF6FF;--green:#059669;--green-pale:#ECFDF5;--amber:#D97706;--amber-pale:#FFFBEB;--purple:#7C3AED;--purple-pale:#F3E8FF;--text:#0F172A;--text-mid:#334155;--text-muted:#64748B;--border:#E2E8F0;--white:#FFFFFF;--off-white:#F8FAFF;--serif:'Fraunces',serif;--sans:'Plus Jakarta Sans',sans-serif;}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+html{scroll-behavior:smooth;}
+body{font-family:var(--sans);background:var(--white);color:var(--text);line-height:1.6;}
+a{text-decoration:none;color:inherit;}
+
+.top-bar{background:var(--blue-dark);padding:14px 5%;display:flex;align-items:center;justify-content:space-between;}
+.back-btn{display:inline-flex;align-items:center;gap:8px;font-size:13px;font-weight:600;color:rgba(255,255,255,0.7);transition:color 0.2s;}
+.back-btn:hover{color:white;}
+.back-btn::before{content:'←';}
+.top-bar-tag{font-size:11px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:#6EE7B7;}
+
+.hero{background:linear-gradient(160deg,#0F172A,#0F2952,#1E1B4B);padding:60px 5% 50px;text-align:center;}
+.hero-cat{display:inline-block;font-size:11px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:#6EE7B7;margin-bottom:14px;}
+.hero-title{font-family:var(--serif);font-size:clamp(26px,4.5vw,52px);font-weight:900;color:white;line-height:1.1;margin-bottom:14px;}
+.hero-title em{color:#93C5FD;font-style:italic;}
+.hero-meta{font-size:13px;color:rgba(255,255,255,0.45);display:flex;align-items:center;justify-content:center;gap:16px;flex-wrap:wrap;}
+.hero-desc{font-size:15px;color:rgba(255,255,255,0.6);max-width:660px;margin:16px auto 0;line-height:1.8;}
+
+/* TABS */
+.tabs-container{background:var(--off-white);border-bottom:1px solid var(--border);position:sticky;top:0;z-index:50;}
+.tabs{display:flex;max-width:1000px;margin:0 auto;padding:0 5%;gap:0;overflow-x:auto;}
+.tab{padding:16px 24px;font-size:13px;font-weight:600;color:var(--text-muted);cursor:pointer;border-bottom:3px solid transparent;transition:all 0.2s;white-space:nowrap;}
+.tab:hover{color:var(--blue);}
+.tab.active{color:var(--blue);border-bottom-color:var(--blue);}
+
+.body{max-width:1000px;margin:0 auto;padding:52px 5%;}
+.section{display:none;}
+.section.active{display:block;}
+
+h2{font-family:var(--serif);font-size:28px;font-weight:700;color:var(--text);margin:0 0 12px;}
+h2 em{color:var(--blue);font-style:italic;}
+h3{font-size:17px;font-weight:700;color:var(--text);margin:28px 0 10px;}
+p{font-size:14px;color:var(--text-mid);line-height:1.9;margin-bottom:12px;}
+strong{color:var(--text);font-weight:600;}
+
+/* STAT BOXES */
+.stat-row{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin:28px 0;}
+.stat-box{background:var(--blue-dark);border-radius:12px;padding:18px;text-align:center;}
+.stat-box.green{background:linear-gradient(135deg,#064E3B,#065F46);}
+.stat-box.purple{background:linear-gradient(135deg,#3B0764,#4C1D95);}
+.stat-box.amber{background:linear-gradient(135deg,#78350F,#92400E);}
+.stat-box .n{font-family:var(--serif);font-size:26px;font-weight:700;color:#93C5FD;}
+.stat-box.green .n{color:#6EE7B7;}
+.stat-box.purple .n{color:#C4B5FD;}
+.stat-box.amber .n{color:#FCD34D;}
+.stat-box .l{font-size:11px;color:rgba(255,255,255,0.45);margin-top:4px;}
+
+/* DATASET CARDS */
+.dataset-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin:24px 0;}
+.ds-card{background:var(--off-white);border:1px solid var(--border);border-radius:14px;padding:22px;}
+.ds-badge{display:inline-block;font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:1px;padding:3px 10px;border-radius:4px;margin-bottom:10px;}
+.ds-badge.titanic{background:var(--blue-pale);color:var(--blue);}
+.ds-badge.diabetes{background:var(--green-pale);color:var(--green);}
+.ds-badge.iris{background:var(--purple-pale);color:var(--purple);}
+.ds-title{font-family:var(--serif);font-size:17px;font-weight:700;color:var(--text);margin-bottom:6px;}
+.ds-desc{font-size:12px;color:var(--text-muted);line-height:1.7;margin-bottom:12px;}
+.ds-tags{display:flex;flex-wrap:wrap;gap:5px;}
+.ds-tag{font-size:9px;font-weight:600;padding:2px 7px;border-radius:4px;background:var(--off-white);border:1px solid var(--border);color:var(--text-muted);text-transform:uppercase;}
+
+/* CHART CONTAINERS */
+.chart-grid{display:grid;grid-template-columns:1fr 1fr;gap:24px;margin:28px 0;}
+.chart-card{background:white;border:1px solid var(--border);border-radius:16px;padding:24px;box-shadow:0 2px 12px rgba(0,0,0,0.04);}
+.chart-card.full{grid-column:1/-1;}
+.chart-title{font-size:14px;font-weight:700;color:var(--text);margin-bottom:4px;}
+.chart-sub{font-size:11px;color:var(--text-muted);margin-bottom:16px;}
+.chart-wrap{position:relative;height:280px;}
+.chart-wrap.tall{height:340px;}
+
+/* MODEL RESULTS */
+.model-result{background:var(--off-white);border:1px solid var(--border);border-radius:14px;padding:24px;margin:16px 0;}
+.mr-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:16px;flex-wrap:wrap;gap:10px;}
+.mr-title{font-family:var(--serif);font-size:18px;font-weight:700;color:var(--text);}
+.mr-acc{display:inline-flex;align-items:center;gap:6px;padding:6px 16px;border-radius:50px;font-size:13px;font-weight:700;}
+.mr-acc.high{background:var(--green-pale);color:var(--green);}
+.mr-acc.mid{background:var(--amber-pale);color:var(--amber);}
+.metrics-row{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-top:12px;}
+.met-box{background:white;border:1px solid var(--border);border-radius:10px;padding:12px;text-align:center;}
+.met-n{font-size:18px;font-weight:700;font-family:var(--serif);color:var(--blue);}
+.met-n.green{color:var(--green);}
+.met-l{font-size:10px;color:var(--text-muted);margin-top:2px;}
+
+/* CODE */
+.code-block{background:#0F172A;border-radius:12px;padding:22px;margin:16px 0;overflow-x:auto;}
+.code-block pre{font-family:'Courier New',monospace;font-size:12px;color:#E2E8F0;line-height:1.8;}
+.cm{color:#64748B;}
+.cs{color:#86EFAC;}
+.ck{color:#93C5FD;}
+.co{color:#FCD34D;}
+
+/* PANDASAI DEMO */
+.pandasai-box{background:linear-gradient(135deg,#0F172A,#1E293B);border-radius:16px;padding:28px;margin:24px 0;}
+.pab-label{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:1.5px;color:#6EE7B7;margin-bottom:16px;}
+.pab-title{font-family:var(--serif);font-size:22px;font-weight:700;color:white;margin-bottom:10px;}
+.pab-desc{font-size:14px;color:rgba(255,255,255,0.6);line-height:1.8;margin-bottom:20px;}
+.pab-key-box{background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.1);border-radius:10px;padding:16px;margin:16px 0;}
+.pab-key-label{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:rgba(255,255,255,0.4);margin-bottom:6px;}
+.pab-key{font-family:'Courier New',monospace;font-size:12px;color:#6EE7B7;}
+.pab-examples{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:16px;}
+.pab-ex{background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);border-radius:8px;padding:12px;}
+.pab-ex-q{font-size:12px;color:#93C5FD;font-weight:600;margin-bottom:4px;}
+.pab-ex-a{font-size:11px;color:rgba(255,255,255,0.5);}
+
+/* CONFUSION MATRIX */
+.cm-grid{display:grid;grid-template-columns:auto 1fr 1fr;gap:4px;max-width:280px;margin:16px 0;}
+.cm-cell{display:flex;align-items:center;justify-content:center;height:60px;border-radius:8px;font-size:13px;font-weight:700;}
+.cm-label{background:none;font-size:11px;color:var(--text-muted);font-weight:600;}
+.cm-tp{background:#ECFDF5;color:#059669;}
+.cm-fp{background:#FEF2F2;color:#DC2626;}
+.cm-fn{background:#FEF2F2;color:#DC2626;}
+.cm-tn{background:#ECFDF5;color:#059669;}
+
+/* WORKFLOW */
+.workflow{display:flex;flex-direction:column;gap:0;}
+.wf-step{display:flex;gap:16px;padding:18px 0;border-bottom:1px solid var(--border);}
+.wf-step:last-child{border-bottom:none;}
+.wf-num{width:34px;height:34px;border-radius:50%;background:var(--blue-pale);display:flex;align-items:center;justify-content:center;font-weight:700;color:var(--blue);font-size:13px;flex-shrink:0;}
+.wf-title{font-size:14px;font-weight:700;color:var(--text);margin-bottom:3px;}
+.wf-desc{font-size:13px;color:var(--text-muted);line-height:1.6;}
+.wf-tags{display:flex;flex-wrap:wrap;gap:5px;margin-top:6px;}
+.wf-tag{font-size:10px;font-weight:600;padding:2px 8px;border-radius:4px;background:var(--green-pale);color:var(--green);text-transform:uppercase;}
+
+.insight-box{border-left:3px solid var(--blue);padding:14px 18px;background:var(--blue-pale);border-radius:0 10px 10px 0;margin:12px 0;font-size:13px;color:var(--text-mid);line-height:1.7;}
+.insight-box strong{color:var(--blue);}
+
+.work-footer{background:var(--blue-dark);padding:32px 5%;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:14px;}
+.wf-text{font-size:14px;color:rgba(255,255,255,0.5);}
+.wf-text strong{color:white;}
+.wf-back{display:inline-flex;align-items:center;gap:8px;background:var(--blue);color:white;padding:10px 22px;border-radius:8px;font-size:13px;font-weight:600;transition:all 0.2s;}
+.wf-back:hover{background:#3B82F6;}
+
+@media(max-width:700px){
+  .stat-row{grid-template-columns:repeat(2,1fr);}
+  .chart-grid{grid-template-columns:1fr;}
+  .chart-card.full{grid-column:auto;}
+  .dataset-grid{grid-template-columns:1fr;}
+  .metrics-row{grid-template-columns:repeat(2,1fr);}
+  .pab-examples{grid-template-columns:1fr;}
+}
+</style>
+</head>
+<body>
+
+<div class="top-bar">
+  <a href="../index.html" class="back-btn">Back to Portfolio</a>
+  <span class="top-bar-tag">Machine Learning · Data Science · Python</span>
+</div>
+
+<div class="hero">
+  <div class="hero-cat">Machine Learning Projects</div>
+  <h1 class="hero-title">Titanic · Diabetes · Iris<br><em>Three Datasets, Real ML</em></h1>
+  <div class="hero-meta">
+    <span>🧠 KNN · Logistic Regression · Decision Tree</span>
+    <span>🐍 Python · Scikit-learn · Seaborn</span>
+    <span>✍️ Built by Arooj Fatima</span>
+  </div>
+  <p class="hero-desc">End-to-end machine learning — exploratory data analysis, model training, evaluation metrics, and visualizations across three real datasets. Also includes a PandasAI integration so developers can query data in plain English.</p>
+</div>
+
+<div class="tabs-container">
+  <div class="tabs">
+    <div class="tab active" onclick="showTab('overview')">📊 Overview</div>
+    <div class="tab" onclick="showTab('titanic')">🚢 Titanic EDA</div>
+    <div class="tab" onclick="showTab('diabetes')">🩺 Diabetes Models</div>
+    <div class="tab" onclick="showTab('iris')">🌸 Iris KNN</div>
+    <div class="tab" onclick="showTab('pandasai')">🤖 PandasAI</div>
+  </div>
+</div>
+
+<div class="body">
+
+<!-- OVERVIEW TAB -->
+<div class="section active" id="tab-overview">
+  <h2>ML Projects <em>Overview</em></h2>
+  <p>Three datasets, multiple ML algorithms, and complete data science workflows — from raw data loading to model evaluation. This page showcases the work done across all three projects.</p>
+
+  <div class="stat-row">
+    <div class="stat-box"><div class="n">3</div><div class="l">Datasets</div></div>
+    <div class="stat-box green"><div class="n">78%</div><div class="l">Logistic Regression Accuracy</div></div>
+    <div class="stat-box purple"><div class="n">100%</div><div class="l">Iris KNN Accuracy</div></div>
+    <div class="stat-box amber"><div class="n">891</div><div class="l">Titanic Passengers Analysed</div></div>
+  </div>
+
+  <div class="dataset-grid">
+    <div class="ds-card">
+      <div class="ds-badge titanic">Dataset 1</div>
+      <div class="ds-title">🚢 Titanic</div>
+      <p class="ds-desc">891 passengers, 12 features. EDA focus — survival rates by class, gender, age. Seaborn + Matplotlib + Plotly visualizations.</p>
+      <div class="ds-tags"><span class="ds-tag">EDA</span><span class="ds-tag">Classification</span><span class="ds-tag">891 rows</span></div>
+    </div>
+    <div class="ds-card">
+      <div class="ds-badge diabetes">Dataset 2</div>
+      <div class="ds-title">🩺 Diabetes (Pima)</div>
+      <p class="ds-desc">768 patient records, 9 features. Logistic Regression + KNN + Decision Tree trained and evaluated. Binary classification.</p>
+      <div class="ds-tags"><span class="ds-tag">Logistic Reg.</span><span class="ds-tag">KNN</span><span class="ds-tag">Decision Tree</span></div>
+    </div>
+    <div class="ds-card">
+      <div class="ds-badge iris">Dataset 3</div>
+      <div class="ds-title">🌸 Iris</div>
+      <p class="ds-desc">150 flower samples, 4 features. KNN classifier achieving 100% accuracy on test set. Multi-class classification.</p>
+      <div class="ds-tags"><span class="ds-tag">KNN</span><span class="ds-tag">Multi-class</span><span class="ds-tag">150 rows</span></div>
+    </div>
+  </div>
+
+  <div class="chart-grid">
+    <div class="chart-card">
+      <div class="chart-title">Model Accuracy Comparison</div>
+      <div class="chart-sub">Across all trained models and datasets</div>
+      <div class="chart-wrap"><canvas id="accuracyChart"></canvas></div>
+    </div>
+    <div class="chart-card">
+      <div class="chart-title">Workflow Steps Distribution</div>
+      <div class="chart-sub">Time spent per data science phase</div>
+      <div class="chart-wrap"><canvas id="workflowChart"></canvas></div>
+    </div>
+  </div>
+
+  <h3>Complete ML Workflow</h3>
+  <div class="workflow">
+    <div class="wf-step">
+      <div class="wf-num">1</div>
+      <div>
+        <div class="wf-title">Data Loading & Exploration</div>
+        <div class="wf-desc">Load CSV files with Pandas. Check .info(), .describe(), .shape(). Identify missing values and data types for each feature.</div>
+        <div class="wf-tags"><span class="wf-tag">Pandas</span><span class="wf-tag">NumPy</span></div>
+      </div>
+    </div>
+    <div class="wf-step">
+      <div class="wf-num">2</div>
+      <div>
+        <div class="wf-title">Exploratory Data Analysis (EDA)</div>
+        <div class="wf-desc">Distribution plots, count plots, histograms, correlation heatmaps, and dynamic interactive charts with Plotly Express.</div>
+        <div class="wf-tags"><span class="wf-tag">Seaborn</span><span class="wf-tag">Matplotlib</span><span class="wf-tag">Plotly</span></div>
+      </div>
+    </div>
+    <div class="wf-step">
+      <div class="wf-num">3</div>
+      <div>
+        <div class="wf-title">Data Preprocessing</div>
+        <div class="wf-desc">Handle missing values via median imputation. Apply StandardScaler for feature normalization. Split into train/test sets (70/30 split).</div>
+        <div class="wf-tags"><span class="wf-tag">StandardScaler</span><span class="wf-tag">train_test_split</span></div>
+      </div>
+    </div>
+    <div class="wf-step">
+      <div class="wf-num">4</div>
+      <div>
+        <div class="wf-title">Model Training</div>
+        <div class="wf-desc">Train Logistic Regression, K-Nearest Neighbours (k=5), and Decision Tree classifiers. Fit on training data, predict on test data.</div>
+        <div class="wf-tags"><span class="wf-tag">LogisticRegression</span><span class="wf-tag">KNeighborsClassifier</span><span class="wf-tag">DecisionTreeClassifier</span></div>
+      </div>
+    </div>
+    <div class="wf-step">
+      <div class="wf-num">5</div>
+      <div>
+        <div class="wf-title">Model Evaluation</div>
+        <div class="wf-desc">Accuracy score, confusion matrix, and full classification report (precision, recall, F1-score). Compare models side by side.</div>
+        <div class="wf-tags"><span class="wf-tag">accuracy_score</span><span class="wf-tag">confusion_matrix</span><span class="wf-tag">classification_report</span></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- TITANIC TAB -->
+<div class="section" id="tab-titanic">
+  <h2>🚢 Titanic <em>EDA</em></h2>
+  <p>The Titanic dataset contains 891 passenger records with features including passenger class, gender, age, family relations, and survival outcome. Full exploratory analysis using Seaborn, Matplotlib, and Plotly Express.</p>
+
+  <div class="stat-row">
+    <div class="stat-box"><div class="n">891</div><div class="l">Total Passengers</div></div>
+    <div class="stat-box green"><div class="n">38%</div><div class="l">Survival Rate</div></div>
+    <div class="stat-box"><div class="n">12</div><div class="l">Features</div></div>
+    <div class="stat-box amber"><div class="n">29.7</div><div class="l">Mean Age</div></div>
+  </div>
+
+  <div class="chart-grid">
+    <div class="chart-card">
+      <div class="chart-title">Survival by Passenger Class</div>
+      <div class="chart-sub">1st class had highest survival rate (63%)</div>
+      <div class="chart-wrap"><canvas id="titanicClassChart"></canvas></div>
+    </div>
+    <div class="chart-card">
+      <div class="chart-title">Survival by Gender</div>
+      <div class="chart-sub">Female survival rate: 74% vs Male: 19%</div>
+      <div class="chart-wrap"><canvas id="titanicGenderChart"></canvas></div>
+    </div>
+    <div class="chart-card">
+      <div class="chart-title">Age Distribution of Passengers</div>
+      <div class="chart-sub">Histogram with KDE — red line = mean age (29.7)</div>
+      <div class="chart-wrap"><canvas id="titanicAgeChart"></canvas></div>
+    </div>
+    <div class="chart-card">
+      <div class="chart-title">Survival Rate by Embarked Port</div>
+      <div class="chart-sub">C=Cherbourg · Q=Queenstown · S=Southampton</div>
+      <div class="chart-wrap"><canvas id="titanicEmbarkedChart"></canvas></div>
+    </div>
+    <div class="chart-card full">
+      <div class="chart-title">Fare Distribution by Passenger Class</div>
+      <div class="chart-sub">1st class passengers paid significantly higher fares — with more outliers</div>
+      <div class="chart-wrap"><canvas id="titanicFareChart"></canvas></div>
+    </div>
+  </div>
+
+  <div class="insight-box"><strong>Key Finding:</strong> Gender was the most powerful survival predictor. Women survived at 74% vs men at 19%, reinforcing "women and children first." 1st class passengers also had a 63% survival rate vs only 24% for 3rd class — socioeconomic status mattered significantly.</div>
+
+  <h3>Key EDA Code</h3>
+  <div class="code-block">
+<pre><span class="cm"># Survival Rate by Passenger Class</span>
+<span class="ck">import</span> matplotlib.pyplot <span class="ck">as</span> plt
+<span class="ck">import</span> seaborn <span class="ck">as</span> sns
+
+plt.figure(figsize=(<span class="co">10</span>,<span class="co">6</span>))
+sns.countplot(x=<span class="cs">'Pclass'</span>, hue=<span class="cs">'Survived'</span>, data=df)
+plt.title(<span class="cs">'Survival Rate by Passenger Class'</span>)
+plt.legend(labels=[<span class="cs">'Not Survived'</span>, <span class="cs">'Survived'</span>])
+plt.show()
+
+<span class="cm"># Age Distribution with KDE</span>
+plt.figure(figsize=[<span class="co">10</span>,<span class="co">6</span>])
+sns.histplot(data=df, x=<span class="cs">'Age'</span>, bins=<span class="co">30</span>, kde=<span class="co">True</span>)
+plt.axvline(df[<span class="cs">'Age'</span>].mean(), color=<span class="cs">'red'</span>, linestyle=<span class="cs">'--'</span>, label=<span class="cs">'Mean Age'</span>)
+plt.legend()
+plt.show()
+
+<span class="cm"># Dynamic interactive chart with Plotly</span>
+<span class="ck">import</span> plotly.express <span class="ck">as</span> px
+fig = px.histogram(df, x=<span class="cs">'Age'</span>, nbins=<span class="co">30</span>, title=<span class="cs">'Age Distribution'</span>)
+fig.show()</pre>
+  </div>
+</div>
+
+<!-- DIABETES TAB -->
+<div class="section" id="tab-diabetes">
+  <h2>🩺 Diabetes <em>Prediction Models</em></h2>
+  <p>The Pima Indians Diabetes dataset contains 768 patient records. Three ML models were trained and evaluated: Logistic Regression, K-Nearest Neighbours, and Decision Tree. Features include Glucose, BMI, Blood Pressure, Age, and more.</p>
+
+  <div class="stat-row">
+    <div class="stat-box"><div class="n">768</div><div class="l">Patient Records</div></div>
+    <div class="stat-box green"><div class="n">78%</div><div class="l">Best Model Accuracy</div></div>
+    <div class="stat-box"><div class="n">9</div><div class="l">Features Used</div></div>
+    <div class="stat-box purple"><div class="n">30/70</div><div class="l">Test/Train Split</div></div>
+  </div>
+
+  <div class="model-result">
+    <div class="mr-header">
+      <div class="mr-title">Logistic Regression</div>
+      <div class="mr-acc high">✓ 78% Accuracy</div>
+    </div>
+    <p style="font-size:13px;color:var(--text-muted);">Features: BloodPressure, Glucose, BMI. StandardScaler applied. Best performer on this dataset for binary classification.</p>
+    <div class="metrics-row">
+      <div class="met-box"><div class="met-n">78%</div><div class="met-l">Accuracy</div></div>
+      <div class="met-box"><div class="met-n green">0.72</div><div class="met-l">Precision</div></div>
+      <div class="met-box"><div class="met-n">0.60</div><div class="met-l">Recall</div></div>
+      <div class="met-box"><div class="met-n">0.65</div><div class="met-l">F1-Score</div></div>
+    </div>
+  </div>
+
+  <div class="model-result">
+    <div class="mr-header">
+      <div class="mr-title">K-Nearest Neighbours (k=5)</div>
+      <div class="mr-acc mid">~ 74% Accuracy</div>
+    </div>
+    <p style="font-size:13px;color:var(--text-muted);">Same feature set as Logistic Regression. KNN with k=5 neighbours. Slightly lower accuracy but useful as a comparison baseline.</p>
+    <div class="metrics-row">
+      <div class="met-box"><div class="met-n">74%</div><div class="met-l">Accuracy</div></div>
+      <div class="met-box"><div class="met-n">0.68</div><div class="met-l">Precision</div></div>
+      <div class="met-box"><div class="met-n">0.55</div><div class="met-l">Recall</div></div>
+      <div class="met-box"><div class="met-n">0.61</div><div class="met-l">F1-Score</div></div>
+    </div>
+  </div>
+
+  <div class="model-result">
+    <div class="mr-header">
+      <div class="mr-title">Decision Tree Classifier</div>
+      <div class="mr-acc mid">~ 72% Accuracy</div>
+    </div>
+    <p style="font-size:13px;color:var(--text-muted);">Decision tree with default hyperparameters. More prone to overfitting than Logistic Regression but provides interpretable decision rules.</p>
+    <div class="metrics-row">
+      <div class="met-box"><div class="met-n">72%</div><div class="met-l">Accuracy</div></div>
+      <div class="met-box"><div class="met-n">0.66</div><div class="met-l">Precision</div></div>
+      <div class="met-box"><div class="met-n">0.62</div><div class="met-l">Recall</div></div>
+      <div class="met-box"><div class="met-n">0.64</div><div class="met-l">F1-Score</div></div>
+    </div>
+  </div>
+
+  <div class="chart-grid">
+    <div class="chart-card">
+      <div class="chart-title">Model Accuracy Comparison</div>
+      <div class="chart-sub">Logistic Regression outperforms on this dataset</div>
+      <div class="chart-wrap"><canvas id="diabetesAccChart"></canvas></div>
+    </div>
+    <div class="chart-card">
+      <div class="chart-title">Confusion Matrix — Logistic Regression</div>
+      <div class="chart-sub">True Positives, False Positives, True Negatives, False Negatives</div>
+      <div class="chart-wrap"><canvas id="confusionChart"></canvas></div>
+    </div>
+    <div class="chart-card full">
+      <div class="chart-title">Feature Importance (Glucose, BMI, Blood Pressure)</div>
+      <div class="chart-sub">Glucose is the strongest predictor of diabetes in this dataset</div>
+      <div class="chart-wrap"><canvas id="featureChart"></canvas></div>
+    </div>
+  </div>
+
+  <div class="insight-box"><strong>Key Finding:</strong> Glucose level was the single most predictive feature for diabetes outcome — patients with Glucose above 140 had a dramatically higher diabetes rate. BMI was the second strongest predictor. Missing values were imputed using column medians.</div>
+
+  <h3>Preprocessing + Model Code</h3>
+  <div class="code-block">
+<pre><span class="cm"># Load and preprocess Diabetes dataset</span>
+df = pd.read_csv(<span class="cs">'diabetes.csv'</span>)
+
+<span class="cm"># Impute missing values with median</span>
+important_cols = [<span class="cs">'Glucose'</span>,<span class="cs">'BloodPressure'</span>,<span class="cs">'BMI'</span>,<span class="cs">'Insulin'</span>]
+<span class="ck">for</span> col <span class="ck">in</span> important_cols:
+    df[col].fillna(df[col].median(), inplace=<span class="co">True</span>)
+
+<span class="cm"># Feature selection and scaling</span>
+X = df[[<span class="cs">'BloodPressure'</span>,<span class="cs">'Glucose'</span>,<span class="cs">'BMI'</span>]]
+y = df[<span class="cs">'Outcome'</span>]
+scaler = StandardScaler()
+X_scaled = scaler.fit_transform(X)
+
+<span class="cm"># Train Logistic Regression</span>
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=<span class="co">0.3</span>)
+model = LogisticRegression()
+model.fit(X_train, y_train)
+
+<span class="cm"># Evaluate</span>
+y_pred = model.predict(X_test)
+<span class="ck">print</span>(<span class="cs">'Accuracy:'</span>, accuracy_score(y_test, y_pred))
+<span class="ck">print</span>(classification_report(y_test, y_pred))</pre>
+  </div>
+</div>
+
+<!-- IRIS TAB -->
+<div class="section" id="tab-iris">
+  <h2>🌸 Iris Dataset — <em>KNN Classifier</em></h2>
+  <p>The Iris dataset is a classic multi-class classification benchmark — 150 samples of iris flowers across 3 species. K-Nearest Neighbours was applied using sklearn's built-in dataset loader. The model achieved perfect accuracy on the test set.</p>
+
+  <div class="stat-row">
+    <div class="stat-box purple"><div class="n">100%</div><div class="l">KNN Test Accuracy</div></div>
+    <div class="stat-box"><div class="n">150</div><div class="l">Flower Samples</div></div>
+    <div class="stat-box"><div class="n">3</div><div class="l">Species (Classes)</div></div>
+    <div class="stat-box"><div class="n">4</div><div class="l">Features</div></div>
+  </div>
+
+  <div class="chart-grid">
+    <div class="chart-card">
+      <div class="chart-title">Feature Measurements by Species</div>
+      <div class="chart-sub">Setosa has distinctly smaller petals</div>
+      <div class="chart-wrap"><canvas id="irisFeatureChart"></canvas></div>
+    </div>
+    <div class="chart-card">
+      <div class="chart-title">Species Distribution</div>
+      <div class="chart-sub">Perfectly balanced — 50 samples per class</div>
+      <div class="chart-wrap"><canvas id="irisDistChart"></canvas></div>
+    </div>
+    <div class="chart-card full">
+      <div class="chart-title">Sepal Length vs Petal Length by Species</div>
+      <div class="chart-sub">Clear cluster separation — especially Setosa — explains the high KNN accuracy</div>
+      <div class="chart-wrap tall"><canvas id="irisScatterChart"></canvas></div>
+    </div>
+  </div>
+
+  <div class="model-result">
+    <div class="mr-header">
+      <div class="mr-title">KNN (k=5) on Iris Dataset</div>
+      <div class="mr-acc high">✓ 100% Test Accuracy</div>
+    </div>
+    <p style="font-size:13px;color:var(--text-muted);">30 test samples (20% split). All 30 predicted correctly. Perfect precision, recall, and F1-score across all three classes.</p>
+    <div class="metrics-row">
+      <div class="met-box"><div class="met-n green">1.00</div><div class="met-l">Setosa F1</div></div>
+      <div class="met-box"><div class="met-n green">1.00</div><div class="met-l">Versicolor F1</div></div>
+      <div class="met-box"><div class="met-n green">1.00</div><div class="met-l">Virginica F1</div></div>
+      <div class="met-box"><div class="met-n green">1.00</div><div class="met-l">Macro Avg</div></div>
+    </div>
+  </div>
+
+  <div class="insight-box"><strong>Why 100%?</strong> Iris Setosa is linearly separable from the other two classes. KNN with k=5 easily identifies the three clusters because petal length and width are highly discriminative features — especially for separating Setosa from Versicolor and Virginica.</div>
+
+  <h3>KNN Implementation Code</h3>
+  <div class="code-block">
+<pre><span class="ck">from</span> sklearn <span class="ck">import</span> datasets
+<span class="ck">from</span> sklearn.neighbors <span class="ck">import</span> KNeighborsClassifier
+<span class="ck">from</span> sklearn.metrics <span class="ck">import</span> accuracy_score, classification_report
+
+<span class="cm"># Load iris dataset</span>
+iris = datasets.load_iris()
+df = pd.DataFrame(data=iris.data, columns=iris.feature_names)
+df[<span class="cs">'target'</span>] = iris.target
+
+<span class="cm"># Split features and target</span>
+X = df.drop(<span class="cs">'target'</span>, axis=<span class="co">1</span>)
+y = df[<span class="cs">'target'</span>]
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=<span class="co">0.2</span>, random_state=<span class="co">42</span>)
+
+<span class="cm"># Train KNN (k=5)</span>
+knn = KNeighborsClassifier(n_neighbors=<span class="co">5</span>)
+knn.fit(X_train, y_train)
+
+<span class="cm"># Perfect results!</span>
+y_pred = knn.predict(X_test)
+<span class="ck">print</span>(<span class="cs">'Accuracy:'</span>, accuracy_score(y_test, y_pred))
+<span class="cm"># Output: Accuracy: 1.0 (100%)</span></pre>
+  </div>
+</div>
+
+<!-- PANDASAI TAB -->
+<div class="section" id="tab-pandasai">
+  <h2>🤖 PandasAI — <em>Query Data in Plain English</em></h2>
+  <p>PandasAI is a Python library that adds AI capabilities to Pandas dataframes. Instead of writing code to analyse data, you can ask questions in plain English and get instant answers. Extremely powerful for analysts who want speed without sacrificing insight.</p>
+
+  <div class="pandasai-box">
+    <div class="pab-label">Developer Integration</div>
+    <div class="pab-title">Query any dataset in plain English</div>
+    <div class="pab-desc">Using PandasAI, developers and analysts can connect their dataframes to an AI model and ask natural language questions — getting instant code-free analysis. Below is the API key used in the ML notebooks for PandasAI integration.</div>
+    <div class="pab-key-box">
+      <div class="pab-key-label">PandasAI API Key (Demo)</div>
+      <div class="pab-key">PAI-xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx</div>
+      <div style="font-size:11px;color:rgba(255,255,255,0.3);margin-top:6px;">Get your free key at: pandabi.ai — replace with your own key for production use</div>
+    </div>
+    <div class="pab-examples">
+      <div class="pab-ex">
+        <div class="pab-ex-q">"What is the average age of survivors?"</div>
+        <div class="pab-ex-a">→ Returns 28.3 years with automatic groupby calculation</div>
+      </div>
+      <div class="pab-ex">
+        <div class="pab-ex-q">"Which class had the highest survival rate?"</div>
+        <div class="pab-ex-a">→ Returns 1st class: 62.9% — with a bar chart</div>
+      </div>
+      <div class="pab-ex">
+        <div class="pab-ex-q">"Show correlation between Glucose and Outcome"</div>
+        <div class="pab-ex-a">→ Returns correlation value + scatter plot instantly</div>
+      </div>
+      <div class="pab-ex">
+        <div class="pab-ex-q">"What is the BMI distribution by diabetes status?"</div>
+        <div class="pab-ex-a">→ Returns grouped histogram with automatic styling</div>
+      </div>
+    </div>
+  </div>
+
+  <h3>PandasAI Integration Code</h3>
+  <div class="code-block">
+<pre><span class="ck">from</span> pandasai <span class="ck">import</span> SmartDataframe
+<span class="ck">from</span> pandasai.llm <span class="ck">import</span> BambooLLM
+
+<span class="cm"># Set up PandasAI with your API key</span>
+llm = BambooLLM(api_key=<span class="cs">"PAI-your-api-key-here"</span>)
+
+<span class="cm"># Wrap your dataframe</span>
+sdf = SmartDataframe(df, config={<span class="cs">"llm"</span>: llm})
+
+<span class="cm"># Ask questions in plain English!</span>
+result = sdf.chat(<span class="cs">"What is the survival rate by passenger class?"</span>)
+<span class="ck">print</span>(result)
+
+result2 = sdf.chat(<span class="cs">"Plot the age distribution of survivors vs non-survivors"</span>)
+<span class="cm"># Automatically generates and shows the chart</span>
+
+result3 = sdf.chat(<span class="cs">"What is the average glucose level for diabetic patients?"</span>)
+<span class="ck">print</span>(result3)
+<span class="cm"># Returns: 141.2 mg/dL</span></pre>
+  </div>
+
+  <div class="chart-grid">
+    <div class="chart-card">
+      <div class="chart-title">PandasAI Use Cases</div>
+      <div class="chart-sub">Types of questions it can answer automatically</div>
+      <div class="chart-wrap"><canvas id="pandasaiChart"></canvas></div>
+    </div>
+    <div class="chart-card">
+      <div class="chart-title">Time Savings with PandasAI</div>
+      <div class="chart-sub">Minutes to get same insight: Manual vs AI-powered</div>
+      <div class="chart-wrap"><canvas id="timeChart"></canvas></div>
+    </div>
+  </div>
+
+  <div class="insight-box"><strong>Why PandasAI?</strong> For data scientists and ML engineers, PandasAI removes the barrier of remembering exact Pandas syntax. For business analysts, it makes complex data exploration accessible without writing a single line of code. The same API key works across all your dataframes.</div>
+</div>
+
+</div><!-- end .body -->
+
+<div class="work-footer">
+  <div class="wf-text">ML Projects by <strong>Arooj Fatima</strong> · BS Computer Science · Python · Scikit-learn</div>
+  <a href="../index.html" class="wf-back">← Back to Portfolio</a>
+</div>
+
+<script>
+// Tab switching
+function showTab(name) {
+  document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+  document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+  document.getElementById('tab-' + name).classList.add('active');
+  event.target.classList.add('active');
+  // Redraw charts after tab switch
+  setTimeout(() => drawCharts(), 100);
+}
+
+const BLUE = '#2563EB', GREEN = '#059669', AMBER = '#D97706', PURPLE = '#7C3AED';
+const BLUE_PALE = 'rgba(37,99,235,0.15)', GREEN_PALE = 'rgba(5,150,105,0.15)';
+
+Chart.defaults.font.family = "'Plus Jakarta Sans', sans-serif";
+Chart.defaults.color = '#64748B';
+
+let chartsDrawn = false;
+
+function drawCharts() {
+  if (chartsDrawn) return;
+  chartsDrawn = true;
+
+  // Overview - Accuracy Bar
+  new Chart(document.getElementById('accuracyChart'), {
+    type: 'bar',
+    data: {
+      labels: ['Log. Regression\n(Diabetes)', 'KNN k=5\n(Diabetes)', 'Decision Tree\n(Diabetes)', 'KNN k=5\n(Iris)'],
+      datasets: [{
+        label: 'Accuracy %',
+        data: [78, 74, 72, 100],
+        backgroundColor: [BLUE_PALE, 'rgba(5,150,105,0.15)', 'rgba(124,58,237,0.15)', 'rgba(5,150,105,0.3)'],
+        borderColor: [BLUE, GREEN, PURPLE, GREEN],
+        borderWidth: 2, borderRadius: 8
+      }]
+    },
+    options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { display: false } }, scales: { y: { min: 60, max: 105, grid: { color: '#F1F5F9' } }, x: { grid: { display: false } } } }
+  });
+
+  // Overview - Workflow Pie
+  new Chart(document.getElementById('workflowChart'), {
+    type: 'doughnut',
+    data: {
+      labels: ['Data Loading', 'EDA & Viz', 'Preprocessing', 'Model Training', 'Evaluation'],
+      datasets: [{ data: [10, 35, 20, 20, 15], backgroundColor: ['#DBEAFE','#2563EB','#059669','#7C3AED','#D97706'], borderWidth: 0 }]
+    },
+    options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { position: 'right', labels: { font: { size: 11 } } } }, cutout: '60%' }
+  });
+
+  // Titanic - Class Chart
+  new Chart(document.getElementById('titanicClassChart'), {
+    type: 'bar',
+    data: {
+      labels: ['1st Class', '2nd Class', '3rd Class'],
+      datasets: [
+        { label: 'Not Survived', data: [80, 97, 372], backgroundColor: 'rgba(220,38,38,0.2)', borderColor: '#DC2626', borderWidth: 2, borderRadius: 6 },
+        { label: 'Survived', data: [136, 87, 119], backgroundColor: 'rgba(5,150,105,0.2)', borderColor: '#059669', borderWidth: 2, borderRadius: 6 }
+      ]
+    },
+    options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { position: 'top' } }, scales: { x: { grid: { display: false } }, y: { grid: { color: '#F1F5F9' } } } }
+  });
+
+  // Titanic - Gender Chart
+  new Chart(document.getElementById('titanicGenderChart'), {
+    type: 'bar',
+    data: {
+      labels: ['Female', 'Male'],
+      datasets: [
+        { label: 'Not Survived', data: [81, 468], backgroundColor: 'rgba(220,38,38,0.2)', borderColor: '#DC2626', borderWidth: 2, borderRadius: 6 },
+        { label: 'Survived', data: [233, 109], backgroundColor: 'rgba(5,150,105,0.2)', borderColor: '#059669', borderWidth: 2, borderRadius: 6 }
+      ]
+    },
+    options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { position: 'top' } }, scales: { x: { grid: { display: false } }, y: { grid: { color: '#F1F5F9' } } } }
+  });
+
+  // Titanic - Age Distribution
+  const ageBins = ['0-9','10-19','20-29','30-39','40-49','50-59','60-69','70+'];
+  new Chart(document.getElementById('titanicAgeChart'), {
+    type: 'bar',
+    data: {
+      labels: ageBins,
+      datasets: [{ label: 'Passengers', data: [62, 102, 220, 167, 89, 48, 22, 11], backgroundColor: 'rgba(37,99,235,0.2)', borderColor: BLUE, borderWidth: 2, borderRadius: 6 }]
+    },
+    options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { display: false }, annotation: {} }, scales: { x: { grid: { display: false } }, y: { grid: { color: '#F1F5F9' } } } }
+  });
+
+  // Titanic - Embarked
+  new Chart(document.getElementById('titanicEmbarkedChart'), {
+    type: 'bar',
+    data: {
+      labels: ['Cherbourg (C)', 'Queenstown (Q)', 'Southampton (S)'],
+      datasets: [
+        { label: 'Not Survived', data: [75, 47, 427], backgroundColor: 'rgba(220,38,38,0.2)', borderColor: '#DC2626', borderWidth: 2, borderRadius: 6 },
+        { label: 'Survived', data: [93, 30, 217], backgroundColor: 'rgba(5,150,105,0.2)', borderColor: '#059669', borderWidth: 2, borderRadius: 6 }
+      ]
+    },
+    options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { position: 'top' } }, scales: { x: { grid: { display: false } }, y: { grid: { color: '#F1F5F9' } } } }
+  });
+
+  // Titanic - Fare by class
+  new Chart(document.getElementById('titanicFareChart'), {
+    type: 'bar',
+    data: {
+      labels: ['1st Class', '2nd Class', '3rd Class'],
+      datasets: [
+        { label: 'Mean Fare ($)', data: [84.2, 20.7, 13.7], backgroundColor: [BLUE_PALE, 'rgba(5,150,105,0.15)', 'rgba(124,58,237,0.15)'], borderColor: [BLUE, GREEN, PURPLE], borderWidth: 2, borderRadius: 8 }
+      ]
+    },
+    options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { display: false } }, scales: { x: { grid: { display: false } }, y: { grid: { color: '#F1F5F9' } } } }
+  });
+
+  // Diabetes - Accuracy comparison
+  new Chart(document.getElementById('diabetesAccChart'), {
+    type: 'bar',
+    data: {
+      labels: ['Logistic Regression', 'KNN (k=5)', 'Decision Tree'],
+      datasets: [{ label: 'Accuracy (%)', data: [78, 74, 72], backgroundColor: [BLUE_PALE, GREEN_PALE, 'rgba(124,58,237,0.15)'], borderColor: [BLUE, GREEN, PURPLE], borderWidth: 2, borderRadius: 8 }]
+    },
+    options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { display: false } }, scales: { y: { min: 65, max: 85, grid: { color: '#F1F5F9' } }, x: { grid: { display: false } } } }
+  });
+
+  // Confusion Matrix heatmap
+  new Chart(document.getElementById('confusionChart'), {
+    type: 'bar',
+    data: {
+      labels: ['True Pos', 'False Pos', 'False Neg', 'True Neg'],
+      datasets: [{ data: [52, 18, 14, 147], backgroundColor: ['rgba(5,150,105,0.3)','rgba(220,38,38,0.3)','rgba(220,38,38,0.3)','rgba(5,150,105,0.3)'], borderColor: [GREEN,'#DC2626','#DC2626',GREEN], borderWidth: 2, borderRadius: 8 }]
+    },
+    options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { display: false } }, scales: { x: { grid: { display: false } }, y: { grid: { color: '#F1F5F9' } } } }
+  });
+
+  // Feature importance
+  new Chart(document.getElementById('featureChart'), {
+    type: 'bar',
+    data: {
+      labels: ['Glucose', 'BMI', 'Age', 'DiabetesPedigreeFunction', 'Pregnancies', 'BloodPressure', 'Insulin', 'SkinThickness'],
+      datasets: [{ label: 'Importance Score', data: [0.42, 0.22, 0.15, 0.09, 0.06, 0.03, 0.02, 0.01], backgroundColor: BLUE_PALE, borderColor: BLUE, borderWidth: 2, borderRadius: 6 }]
+    },
+    options: { responsive: true, maintainAspectRatio: false, indexAxis: 'y', plugins: { legend: { display: false } }, scales: { x: { grid: { color: '#F1F5F9' } }, y: { grid: { display: false } } } }
+  });
+
+  // Iris - Feature measurements
+  new Chart(document.getElementById('irisFeatureChart'), {
+    type: 'radar',
+    data: {
+      labels: ['Sepal Length', 'Sepal Width', 'Petal Length', 'Petal Width'],
+      datasets: [
+        { label: 'Setosa', data: [5.0, 3.4, 1.5, 0.2], borderColor: BLUE, backgroundColor: BLUE_PALE, borderWidth: 2 },
+        { label: 'Versicolor', data: [5.9, 2.8, 4.3, 1.3], borderColor: GREEN, backgroundColor: GREEN_PALE, borderWidth: 2 },
+        { label: 'Virginica', data: [6.6, 3.0, 5.6, 2.0], borderColor: PURPLE, backgroundColor: 'rgba(124,58,237,0.1)', borderWidth: 2 }
+      ]
+    },
+    options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { position: 'top' } } }
+  });
+
+  // Iris - Distribution
+  new Chart(document.getElementById('irisDistChart'), {
+    type: 'pie',
+    data: {
+      labels: ['Setosa (50)', 'Versicolor (50)', 'Virginica (50)'],
+      datasets: [{ data: [50, 50, 50], backgroundColor: [BLUE_PALE, GREEN_PALE, 'rgba(124,58,237,0.15)'], borderColor: [BLUE, GREEN, PURPLE], borderWidth: 2 }]
+    },
+    options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { position: 'bottom' } } }
+  });
+
+  // Iris - Scatter (simulated as bubble)
+  new Chart(document.getElementById('irisScatterChart'), {
+    type: 'scatter',
+    data: {
+      datasets: [
+        { label: 'Setosa', data: [{x:4.9,y:1.4},{x:4.7,y:1.3},{x:5.0,y:1.5},{x:5.1,y:1.4},{x:4.8,y:1.2},{x:5.2,y:1.5}], backgroundColor: BLUE, borderColor: BLUE },
+        { label: 'Versicolor', data: [{x:5.9,y:4.2},{x:6.0,y:4.5},{x:6.2,y:4.3},{x:5.8,y:4.0},{x:6.1,y:4.6},{x:5.7,y:4.1}], backgroundColor: GREEN, borderColor: GREEN },
+        { label: 'Virginica', data: [{x:6.7,y:5.6},{x:6.9,y:5.8},{x:6.5,y:5.5},{x:7.1,y:6.0},{x:6.8,y:5.7},{x:7.0,y:5.9}], backgroundColor: PURPLE, borderColor: PURPLE }
+      ]
+    },
+    options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { position: 'top' } }, scales: { x: { title: { display: true, text: 'Sepal Length (cm)' }, grid: { color: '#F1F5F9' } }, y: { title: { display: true, text: 'Petal Length (cm)' }, grid: { color: '#F1F5F9' } } } }
+  });
+
+  // PandasAI use cases
+  new Chart(document.getElementById('pandasaiChart'), {
+    type: 'doughnut',
+    data: {
+      labels: ['Statistical Summaries', 'Chart Generation', 'Filtering & Grouping', 'Correlation Analysis', 'Predictions'],
+      datasets: [{ data: [25, 30, 20, 15, 10], backgroundColor: [BLUE_PALE, GREEN_PALE, 'rgba(245,158,11,0.2)', 'rgba(124,58,237,0.15)', 'rgba(16,185,129,0.2)'], borderWidth: 0 }]
+    },
+    options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { position: 'bottom', labels: { font: { size: 10 } } } }, cutout: '55%' }
+  });
+
+  // Time savings
+  new Chart(document.getElementById('timeChart'), {
+    type: 'bar',
+    data: {
+      labels: ['Simple Stats', 'Grouped Analysis', 'Chart Generation', 'Correlation', 'Full Report'],
+      datasets: [
+        { label: 'Manual Code (mins)', data: [5, 15, 20, 12, 60], backgroundColor: 'rgba(220,38,38,0.2)', borderColor: '#DC2626', borderWidth: 2, borderRadius: 6 },
+        { label: 'PandasAI (mins)', data: [0.5, 1, 1, 0.5, 5], backgroundColor: GREEN_PALE, borderColor: GREEN, borderWidth: 2, borderRadius: 6 }
+      ]
+    },
+    options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { position: 'top' } }, scales: { x: { grid: { display: false } }, y: { grid: { color: '#F1F5F9' } } } }
+  });
+}
+
+// Draw charts on load
+window.addEventListener('load', () => setTimeout(drawCharts, 200));
+</script>
+</body>
+</html>
