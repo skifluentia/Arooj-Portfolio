@@ -594,45 +594,56 @@ result3 = sdf.chat(<span class="cs">"What is the average glucose level for diabe
 </div>
 
 <script>
-// Tab switching
+// ── constants ──────────────────────────────────────────────
+const BLUE='#2563EB',GREEN='#059669',AMBER='#D97706',PURPLE='#7C3AED';
+const BLUE_PALE='rgba(37,99,235,0.15)',GREEN_PALE='rgba(5,150,105,0.15)';
 
-function showTab(event, name) {
-  // hide all sections
-  document.querySelectorAll('.section').forEach(s => {
-    s.classList.remove('active');
-  });
+Chart.defaults.font.family="'Plus Jakarta Sans',sans-serif";
+Chart.defaults.color='#64748B';
 
-  // remove active from all tabs
-  document.querySelectorAll('.tab').forEach(t => {
-    t.classList.remove('active');
-  });
-
-  // show selected section
-  document.getElementById('tab-' + name).classList.add('active');
-
-  // activate clicked tab
-  event.currentTarget.classList.add('active');
-}
-
-const BLUE = '#2563EB', GREEN = '#059669', AMBER = '#D97706', PURPLE = '#7C3AED';
-const BLUE_PALE = 'rgba(37,99,235,0.15)', GREEN_PALE = 'rgba(5,150,105,0.15)';
-
-Chart.defaults.font.family = "'Plus Jakarta Sans', sans-serif";
-Chart.defaults.color = '#64748B';
+// Registry keeps one Chart instance per canvas id
 const chartRegistry = {};
+
 function makeChart(id, config) {
-  if (chartRegistry[id]) { chartRegistry[id].destroy(); }
   const el = document.getElementById(id);
-  if (el) { chartRegistry[id] = new Chart(el, config); }
+  if (!el) return;
+  // destroy old instance so canvas is reusable
+  if (chartRegistry[id]) { chartRegistry[id].destroy(); delete chartRegistry[id]; }
+  chartRegistry[id] = new Chart(el, config);
 }
 
-let chartsDrawn = false;
+// Track which tabs have had their charts drawn
+const drawnTabs = {};
 
-function drawCharts() {
-  if (chartsDrawn) return;
-  chartsDrawn = true;
+// ── tab switching ──────────────────────────────────────────
+function showTab(event, name) {
+  document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+  document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+  document.getElementById('tab-' + name).classList.add('active');
+  event.currentTarget.classList.add('active');
+  // Draw charts for this tab if not drawn yet
+  // Small delay so the section is visible (has real dimensions) before Chart.js renders
+  setTimeout(() => drawTabCharts(name), 50);
+}
 
-  // Overview - Accuracy Bar
+// ── draw only the charts for the active tab ────────────────
+function drawTabCharts(tab) {
+  if (drawnTabs[tab]) return;   // already drawn for this tab
+  drawnTabs[tab] = true;
+
+  if (tab === 'overview')  drawOverviewCharts();
+  if (tab === 'titanic')   drawTitanicCharts();
+  if (tab === 'diabetes')  drawDiabetesCharts();
+  if (tab === 'iris')      drawIrisCharts();
+  if (tab === 'pandasai')  drawPandasaiCharts();
+}
+
+// Draw overview charts on page load (it's the default visible tab)
+window.addEventListener('load', () => setTimeout(() => drawTabCharts('overview'), 100));
+
+// ── OVERVIEW charts ────────────────────────────────────────
+function drawOverviewCharts() {
+
   makeChart('accuracyChart', {
     type: 'bar',
     data: {
@@ -648,7 +659,6 @@ function drawCharts() {
     options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { display: false } }, scales: { y: { min: 60, max: 105, grid: { color: '#F1F5F9' } }, x: { grid: { display: false } } } }
   });
 
-  // Overview - Workflow Pie
   makeChart('workflowChart', {
     type: 'doughnut',
     data: {
@@ -658,7 +668,10 @@ function drawCharts() {
     options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { position: 'right', labels: { font: { size: 11 } } } }, cutout: '60%' }
   });
 
-  // Titanic - Class Chart
+} // end drawOverviewCharts
+
+// ── TITANIC charts ─────────────────────────────────────────
+function drawTitanicCharts() {
   makeChart('titanicClassChart', {
     type: 'bar',
     data: {
@@ -671,7 +684,6 @@ function drawCharts() {
     options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { position: 'top' } }, scales: { x: { grid: { display: false } }, y: { grid: { color: '#F1F5F9' } } } }
   });
 
-  // Titanic - Gender Chart
   makeChart('titanicGenderChart', {
     type: 'bar',
     data: {
@@ -684,7 +696,6 @@ function drawCharts() {
     options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { position: 'top' } }, scales: { x: { grid: { display: false } }, y: { grid: { color: '#F1F5F9' } } } }
   });
 
-  // Titanic - Age Distribution
   const ageBins = ['0-9','10-19','20-29','30-39','40-49','50-59','60-69','70+'];
   makeChart('titanicAgeChart', {
     type: 'bar',
@@ -695,7 +706,6 @@ function drawCharts() {
     options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { display: false }, annotation: {} }, scales: { x: { grid: { display: false } }, y: { grid: { color: '#F1F5F9' } } } }
   });
 
-  // Titanic - Embarked
   makeChart('titanicEmbarkedChart', {
     type: 'bar',
     data: {
@@ -708,7 +718,6 @@ function drawCharts() {
     options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { position: 'top' } }, scales: { x: { grid: { display: false } }, y: { grid: { color: '#F1F5F9' } } } }
   });
 
-  // Titanic - Fare by class
   makeChart('titanicFareChart', {
     type: 'bar',
     data: {
@@ -720,7 +729,10 @@ function drawCharts() {
     options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { display: false } }, scales: { x: { grid: { display: false } }, y: { grid: { color: '#F1F5F9' } } } }
   });
 
-  // Diabetes - Accuracy comparison
+} // end drawTitanicCharts
+
+// ── DIABETES charts ────────────────────────────────────────
+function drawDiabetesCharts() {
   makeChart('diabetesAccChart', {
     type: 'bar',
     data: {
@@ -730,7 +742,6 @@ function drawCharts() {
     options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { display: false } }, scales: { y: { min: 65, max: 85, grid: { color: '#F1F5F9' } }, x: { grid: { display: false } } } }
   });
 
-  // Confusion Matrix heatmap
   makeChart('confusionChart', {
     type: 'bar',
     data: {
@@ -740,7 +751,6 @@ function drawCharts() {
     options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { display: false } }, scales: { x: { grid: { display: false } }, y: { grid: { color: '#F1F5F9' } } } }
   });
 
-  // Feature importance
   makeChart('featureChart', {
     type: 'bar',
     data: {
@@ -750,7 +760,10 @@ function drawCharts() {
     options: { responsive: true, maintainAspectRatio: false, indexAxis: 'y', plugins: { legend: { display: false } }, scales: { x: { grid: { color: '#F1F5F9' } }, y: { grid: { display: false } } } }
   });
 
-  // Iris - Feature measurements
+} // end drawDiabetesCharts
+
+// ── IRIS charts ────────────────────────────────────────────
+function drawIrisCharts() {
   makeChart('irisFeatureChart', {
     type: 'radar',
     data: {
@@ -764,7 +777,6 @@ function drawCharts() {
     options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { position: 'top' } } }
   });
 
-  // Iris - Distribution
   makeChart('irisDistChart', {
     type: 'pie',
     data: {
@@ -774,7 +786,6 @@ function drawCharts() {
     options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { position: 'bottom' } } }
   });
 
-  // Iris - Scatter (simulated as bubble)
   makeChart('irisScatterChart', {
     type: 'scatter',
     data: {
@@ -787,7 +798,10 @@ function drawCharts() {
     options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { position: 'top' } }, scales: { x: { title: { display: true, text: 'Sepal Length (cm)' }, grid: { color: '#F1F5F9' } }, y: { title: { display: true, text: 'Petal Length (cm)' }, grid: { color: '#F1F5F9' } } } }
   });
 
-  // PandasAI use cases
+} // end drawIrisCharts
+
+// ── PANDASAI charts ────────────────────────────────────────
+function drawPandasaiCharts() {
   makeChart('pandasaiChart', {
     type: 'doughnut',
     data: {
@@ -797,7 +811,6 @@ function drawCharts() {
     options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { position: 'bottom', labels: { font: { size: 10 } } } }, cutout: '55%' }
   });
 
-  // Time savings
   makeChart('timeChart', {
     type: 'bar',
     data: {
@@ -809,10 +822,8 @@ function drawCharts() {
     },
     options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { position: 'top' } }, scales: { x: { grid: { display: false } }, y: { grid: { color: '#F1F5F9' } } } }
   });
-}
+} // end drawPandasaiCharts
 
-// Draw charts on load
-window.addEventListener('load', () => setTimeout(drawCharts, 200));
 </script>
 </body>
 </html>
